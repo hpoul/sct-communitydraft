@@ -1,0 +1,24 @@
+<form method="POST" action="../../post/">
+  <input type="hidden" name="category" value="{{ category.id }}" />
+  {% if thread %}
+    <input type="hidden" name="thread" value="{{ thread.id }}" />
+  {% endif %}
+  <table class="sphboard_postform">
+    <tr>
+      <th colspan='2'>New Post</th>
+    </tr>
+    <tr>
+      <td>Subject</td>
+      <td><input type='text' name='subject' value='{{ postSubject }}' /></td>
+    </tr>
+    <tr>
+      <td colspan='2'>Body</td>
+    </tr>
+    <tr>
+      <td colspan='2'><textarea name='body' rows='5' cols='50'></textarea></td>
+    </tr>
+    <tr>
+      <td colspan='2'><input type='submit' value='Post' /></td>
+    </tr>
+  </table>
+</form>

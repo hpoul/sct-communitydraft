@@ -1,0 +1,29 @@
+{% extends "sphene/sphboard/base.html" %}
+
+{% load sphboard_extras %}
+
+{% block content %}
+  {% sphboard_displayBreadcrumbsForThread thread %}
+  <br/><br/>
+  <table class="sphboard_post_list">
+    {% for post in post_list %}
+      <tr>
+        <td rowspan="2" class="sphboard_post_authorinfo">
+          Posted by<br/>
+          {% sphboard_displayUserName post.author %}<br/>
+        </td>
+        <td>{{ post.postdate|date:"Y-m-d H:i:s" }} - <strong>{{ post.subject|escape }}</strong></td>
+      </tr>
+      <tr>
+        <td class="sphboard_post_body">{{ post.body|escape|linebreaks }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <br/><br/>
+  
+  {% if allowPosting %}
+    {% include "sphene/sphboard/_displayPostForm.html" %}
+    <br/><br/>
+  {% endif %}
+
+{% endblock %}

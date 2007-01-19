@@ -1,0 +1,14 @@
+{% load sphboard_extras %}
+
+{% for category in categories %}
+  <tr>
+    {% for test in level|sphrange %}
+      <td width='5px'>&nbsp;</td>
+    {% endfor %}
+    <td colspan='{{ maxDepth|sphminus:level }}'><a href="../{{ category.id }}/">{{ category.name }}</a><br/><small>{{ category.description }}</small></td>
+    <td>{{ category.threadCount }}</td>
+    <td>{{ category.postCount }}</td>
+    <td class="sphboard_latestpost">{% sphboard_latestPost category.latestPost %}</td>
+  </tr>
+  {% sphboard_displayCategories category.childs.all maxDepth level %}
+{% endfor %}

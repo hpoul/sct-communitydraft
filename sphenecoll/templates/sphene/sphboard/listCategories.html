@@ -1,0 +1,52 @@
+{% extends "sphene/sphboard/base.html" %}
+
+{% load sphboard_extras %}
+{% load humanize %}
+
+{% block content %}
+
+  {% sphboard_displayBreadcrumbsForCategory category %}<br/><br/>
+
+  {% if rootCategories %}
+  <table class="sphboard_categories">
+    <tr>
+      <th colspan='5' width='100%'>Title</th>
+      <th>Threads</th>
+      <th>Posts</th>
+      <th>Last Post</th>
+    </tr>
+    {% sphboard_displayCategories rootCategories 5 %}
+  </table>
+  <br/><br/>
+  {% endif %}
+
+  {% if category and category.canContainPosts %}
+    <table class="sphboard_thread_list">
+      <tr>
+        <th colspan='3'>Threads</th>
+      </tr>
+      <tr>
+        <th>Subject / Author</th>
+        <th>Posts</th>
+        <th>Last Post</th>
+      </tr>
+      {% for thread in thread_list %}
+        <tr>
+          <td><a href="../../thread/{{ thread.id }}/">{{ thread.subject }}</a><br/><small>by {% sphboard_displayUserName thread.author %}</small></td>
+          <td>{{ thread.postCount }}</td>
+          <td>{% sphboard_latestPost thread.latestPost 0 %}
+        </tr>
+      {% endfor %}
+      <tr>
+        <td colspan='3'><span style="float:left;">{{ hits }} Threads in this category yet.</span><span style="display:block;float:right;">{% sphboard_pagination pages page %}</span></td>
+      </tr>
+    </table>
+    <br/><br/>
+  {% endif %}
+
+  {% if allowPostThread %}
+    {% include "sphene/sphboard/_displayPostForm.html" %}
+    <br/><br/>
+  {% endif %}
+
+{% endblock %}
