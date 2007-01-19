@@ -1,5 +1,8 @@
 # Django settings for goimcommunity project.
 
+import os
+ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+
 DEBUG = True
 TEMPLATE_DEBUG = True
 
@@ -70,20 +73,20 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/kahless/dev/python/templates',
-    '/home/kahless/dev/python/sitetemplates',
+    ROOT_PATH + '/templates',
+    ROOT_PATH + '/sitetemplates',
 
-    '/home/kahless/dev/python/sphenecoll/templates',
+    ROOT_PATH + '/home/kahless/dev/python/sphenecoll/templates',
 
-    '/home/kahless/dev/python/diamandas/myghtyboard/templates',
-    '/home/kahless/dev/python/diamandas/wiki/templates',
+#    '/home/kahless/dev/python/diamandas/myghtyboard/templates',
+#    '/home/kahless/dev/python/diamandas/wiki/templates',
 )
 
 import sys
-sys.path.append('/home/kahless/dev/python/diamanda/diamandas/')
-sys.path.append('/home/kahless/dev/python/diamanda')
-sys.path.append('/home/kahless/dev/python/sphenecoll')
-sys.path.append('/home/kahless/dev/python/inosit')
+#sys.path.append('/home/kahless/dev/python/diamanda/diamandas/')
+#sys.path.append('/home/kahless/dev/python/diamanda')
+sys.path.append(ROOT_PATH + 'sphenecoll')
+sys.path.append(ROOT_PATH + 'inosit')
 
 
 INSTALLED_APPS = (
