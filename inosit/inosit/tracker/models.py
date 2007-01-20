@@ -49,13 +49,16 @@ class TimeEntry(models.Model):
 
     def project(self):
         return self.task.project.recursiveName()
-
     project.short_description = 'Project'
+
+    def duration(self):
+        return self.end - self.start
+    duration.short_description = 'Duration'
 
     def __str__(self):
         return self.description;
 
     class Admin:
     	list_filter = ['task','owner']
-	list_display = ('task', 'owner', 'project', 'description', 'start', 'end')
+	list_display = ('task', 'owner', 'project', 'description', 'duration', 'start', 'end')
         pass
