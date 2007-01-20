@@ -15,7 +15,7 @@ class Project(models.Model):
     recursiveName.short_description = 'Project'
 
     def __str__(self):
-        return self.recursivename();
+        return self.recursiveName();
 
     class Admin:
         list_display = ('recursiveName', 'owner')
