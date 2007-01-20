@@ -7,8 +7,7 @@ from sphene.community.models import Group
 
 class Project(models.Model):
     group = models.OneToOneField(Group)
-    name = models.CharField(maxlength = 250)
-    description = models.TextField(blank = True)
+    owner = models.ForeignKey(User)
 
     def __str__(self):
         return self.name;
