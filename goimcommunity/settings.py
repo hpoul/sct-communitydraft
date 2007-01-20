@@ -85,8 +85,8 @@ TEMPLATE_DIRS = (
 import sys
 #sys.path.append('/home/kahless/dev/python/diamanda/diamandas/')
 #sys.path.append('/home/kahless/dev/python/diamanda')
-sys.path.append(ROOT_PATH + 'sphenecoll')
-sys.path.append(ROOT_PATH + 'inosit')
+sys.path.append(ROOT_PATH + '/../sphenecoll')
+sys.path.append(ROOT_PATH + '/../inosit')
 
 
 INSTALLED_APPS = (
@@ -107,8 +107,8 @@ INSTALLED_APPS = (
 
     'inosit.tracker',
 
-    'wiki',
-    'myghtyboard',
+    #'wiki',
+    #'myghtyboard',
 
 )
 

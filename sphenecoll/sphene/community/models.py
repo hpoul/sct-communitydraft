@@ -6,6 +6,7 @@ class Group(models.Model):
 	name = models.CharField(maxlength = 250)
 	longname = models.CharField(maxlength = 250)
 	default_theme = models.ForeignKey('Theme', null = True, blank = True)
+	parent = models.ForeignKey('Group', null = True, blank = True)
 
 	def __str__(self):
 		return self.name;

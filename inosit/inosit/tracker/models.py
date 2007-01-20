@@ -6,7 +6,7 @@ from sphene.community.models import Group
 # Create your models here.
 
 class Project(models.Model):
-    group = models.ForeignKey(Group)
+    group = models.OneToOneField(Group)
     name = models.CharField(maxlength = 250)
     description = models.TextField(blank = True)
 
@@ -16,11 +16,11 @@ class Project(models.Model):
     class Admin:
         pass
 
-class TrackerItem(models.Model):
+class Task(models.Model):
     project = models.ForeignKey(Project)
     title = models.CharField(maxlength = 250)
-    author = models.ForeignKey(User, related_name = 'tracker_item_author')
-    owner = models.ForeignKey(User, related_name = 'tracker_item_owner')
+    author = models.ForeignKey(User, related_name = 'task_author')
+    owner = models.ForeignKey(User, related_name = 'task_owner')
     postdate = models.DateTimeField( auto_now_add = True )
     description = models.TextField(blank = True)
 
@@ -33,7 +33,7 @@ class TrackerItem(models.Model):
 
 class TimeEntry(models.Model):
     owner = models.ForeignKey(User)
-    trackerItem = models.ForeignKey(TrackerItem)
+    trackerItem = models.ForeignKey(Task)
     postdate = models.DateTimeField(auto_now_add = True)
     description = models.TextField()
     start = models.DateTimeField()
