@@ -10,7 +10,7 @@ class Project(models.Model):
     owner = models.ForeignKey(User)
 
     def __str__(self):
-        return self.name;
+        return self.group.name;
 
     class Admin:
         pass
