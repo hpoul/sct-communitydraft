@@ -9,10 +9,17 @@ class Project(models.Model):
     group = models.OneToOneField(Group)
     owner = models.ForeignKey(User)
 
+    def recursiveName(self):
+        return self.group.recursiveName()
+
+    recursiveName.short_description = 'Project'
+
     def __str__(self):
-        return self.group.recursiveName();
+        return self.recursivename();
 
     class Admin:
+        list_display = ('recursiveName', 'owner')
+        list_filter = ['owner']
         pass
 
 class Task(models.Model):
