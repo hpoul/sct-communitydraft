@@ -8,6 +8,12 @@ class Group(models.Model):
 	default_theme = models.ForeignKey('Theme', null = True, blank = True)
 	parent = models.ForeignKey('Group', null = True, blank = True)
 
+        def recursiveName(self):
+                recname = ''
+                if self.parent:
+                        recname = self.parent.recursiveName() + ' / '
+                return recname + self.name
+
 	def __str__(self):
 		return self.name;
 

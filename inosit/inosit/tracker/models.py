@@ -10,7 +10,7 @@ class Project(models.Model):
     owner = models.ForeignKey(User)
 
     def __str__(self):
-        return self.group.name;
+        return self.group.recursiveName();
 
     class Admin:
         pass
@@ -27,14 +27,16 @@ class Task(models.Model):
         return self.title;
 
     class Admin:
+        list_filter = ['project', 'owner']
+        list_display = ('title', 'project', 'owner' )
         pass
 
 
 class TimeEntry(models.Model):
     owner = models.ForeignKey(User)
-    trackerItem = models.ForeignKey(Task)
+    task = models.ForeignKey(Task)
     postdate = models.DateTimeField(auto_now_add = True)
-    description = models.TextField()
+    description = models.TextField(blank = True)
     start = models.DateTimeField()
     end = models.DateTimeField()
 
@@ -42,4 +44,6 @@ class TimeEntry(models.Model):
         return self.description;
 
     class Admin:
+    	list_filter = ['task','owner']
+	list_display = ('task', 'owner', 'description', 'start', 'end')
         pass
