@@ -1,0 +1,58 @@
+{% load sphboard_extras %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link rel="stylesheet" href="/static/style.css" />
+  <title>GOIM Community{% block title %} - Uh Yeah !{% endblock %}</title>
+  {% block head %}{% endblock %}
+</head>
+
+
+<body>
+  <div id="top">
+    {% block top %}
+      Some content of the top div ;)
+    {% endblock %}
+  </div>
+  <div id="leftblah">
+    <div id="navigation">
+      {% block navigation %}
+        <ul>
+          <li>Navigation Point 1</li>
+          <li>Navigation Point 2</li>
+        </ul>
+      {% endblock %}
+    </div>
+    <div id="subnavigation">
+      <ul>
+        {% block subnavigation %}
+        {% endblock %}
+      </ul>
+    </div>
+    <div id="userblock">
+      {% if user.is_authenticated %}
+        You are logged in as {% sphboard_displayUserName user %}<br/>
+        <a href="/accounts/logout/">Logout</a>
+      {% else %}
+        You are not logged in.<br/>
+        <a href="/accounts/login/?next={{ request.path|urlencode }}">Login</a>
+      {% endif %}
+    </div>
+  </div>
+  <div id="content">
+{% if messages %}
+  <ul class="messages">
+   {% for message in messages %}
+     <li>{{ message }}</li>
+   {% endfor %}
+  </ul>
+{% endif %}
+{% block content %}
+
+dumdidum
+
+{% endblock %}
+  </div>
+</body>
+</html>

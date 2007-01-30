@@ -67,6 +67,14 @@ MIDDLEWARE_CLASSES = (
     'sphene.community.middleware.GroupMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.request',
+)
+
+
 ROOT_URLCONF = 'goimcommunity.urls'
 
 TEMPLATE_DIRS = (
@@ -74,9 +82,9 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     ROOT_PATH + '/templates',
-    ROOT_PATH + '/sitetemplates',
+    ROOT_PATH + '/../sitetemplates',
 
-    ROOT_PATH + '/home/kahless/dev/python/sphenecoll/templates',
+    ROOT_PATH + '/../sphenecoll/templates',
 
 #    '/home/kahless/dev/python/diamandas/myghtyboard/templates',
 #    '/home/kahless/dev/python/diamandas/wiki/templates',
@@ -87,6 +95,7 @@ import sys
 #sys.path.append('/home/kahless/dev/python/diamanda')
 sys.path.append(ROOT_PATH + '/../sphenecoll')
 sys.path.append(ROOT_PATH + '/../inosit')
+sys.path.append(ROOT_PATH + '/../libs/markdown')
 
 
 INSTALLED_APPS = (
@@ -104,6 +113,7 @@ INSTALLED_APPS = (
     
     'sphene.community',
     'sphene.sphboard',
+    'sphene.sphwiki',
 
     'inosit.tracker',
 

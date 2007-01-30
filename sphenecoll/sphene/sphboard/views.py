@@ -3,10 +3,12 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views.generic.list_detail import object_list
 from django.db.models import Q
+from django.template.context import RequestContext
 
 from sphene.sphboard.models import Category, Post
 
 def showCategory(request, groupName = None, category_id = None):
+    print " ... hehe ... " + request.get_full_path()
     args = {
         'group__isnull': True,
         'parent__isnull': True,
@@ -28,7 +30,8 @@ def showCategory(request, groupName = None, category_id = None):
                 'allowPostThread': categoryObject and categoryObject.allowPostThread( request.user ) }
     templateName = 'sphene/sphboard/listCategories.html'
     if categoryObject == None:
-        return render_to_response( templateName, context )
+        return render_to_response( templateName, context,
+                                   context_instance = RequestContext(request) )
     return object_list( request = request,
                         queryset = categoryObject.thread_list().order_by( '-postdate' ),
                         template_name = templateName,
@@ -38,8 +41,7 @@ def showCategory(request, groupName = None, category_id = None):
                         paginate_by = 3,
                         )
 
-def showThread(request, thread_id, group = None):
-    print " ... " + thread_id
+def showThread(request, thread_id, groupName = None):
     thread = Post.objects.get( pk = thread_id )
     #thread = get_object_or_404(Post, pk = thread_id )
     return object_list( request = request,
@@ -55,7 +57,7 @@ def showThread(request, thread_id, group = None):
                         )
 
 
-def post(request):
+def post(request, groupName = None):
     thread = None
     category = None
     if 'thread' in request.POST:
@@ -75,5 +77,6 @@ def post(request):
                     thread = thread,
                     )
     newpost.save()
+    request.user.message_set.create( message = "Post created successfully." )
     if thread == None: thread = newpost
     return HttpResponseRedirect( '../thread/%s' % thread.id )

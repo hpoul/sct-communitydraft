@@ -8,7 +8,7 @@ class GroupMiddleware(object):
         if 'groupName' in view_kwargs:
             print "we got a groupName: " +  view_kwargs['groupName']
             group = get_object_or_404(Group, name = view_kwargs['groupName'] )
-            settings.TEMPLATE_DIRS = ( "/tmp/hehe", ) + settings.TEMPLATE_DIRS
+            #settings.TEMPLATE_DIRS = ( "/tmp/hehe", ) + settings.TEMPLATE_DIRS
         print " processing view ... "
         return None
 

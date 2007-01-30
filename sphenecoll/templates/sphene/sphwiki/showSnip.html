@@ -1,0 +1,14 @@
+{% extends "sphene/sphboard/base.html" %}
+
+{% load sphboard_extras %}
+{% load sph_extras %}
+
+{% block content %}
+
+  {% if snip %}
+    {{ snip.body|sph_markdown }}
+  {% else %}
+    Snip <strong>{{ snipName }}</strong> does not yet exist.
+  {% endif %}
+
+{% endblock %}

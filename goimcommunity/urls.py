@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 #from wiki.feeds import *
+from django.conf import settings
 
 from django.conf.urls.defaults import *
 # feeds for wikiPages and wikiNews
@@ -24,13 +25,17 @@ urlpatterns = patterns('',
 
                        (r'^board/', include('sphene.sphboard.urls')),
                        (r'^test/(?P<groupName>\w+)/board/', include('sphene.sphboard.urls')),
+                       (r'^test/(?P<groupName>\w+)/wiki/',  include('sphene.sphwiki.urls')),
 
 
-		       (r'^static/(.*)$', 'django.views.static.serve', {'document_root': '/home/kahless/dev/python/static' }),
+		       (r'^static/(.*)$', 'django.views.static.serve', {'document_root': settings.ROOT_PATH + '/../static' }),
 
 
 
                        (r'^site_media/(.*)$', 'django.views.static.serve', {'document_root': '/home/kahless/dev/python/diamanda/media'}), # change it or remove if not on dev server
+
+                       (r'^accounts/login/$', 'django.contrib.auth.views.login'),
+                       (r'^accounts/logout/$','django.contrib.auth.views.logout'),
 
 
 #                       (r'^forum/', include('myghtyboard.URLconf')), # forum

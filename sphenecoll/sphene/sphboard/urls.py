@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import *
-from wiki.feeds import *
 
 from django.conf.urls.defaults import *
 
