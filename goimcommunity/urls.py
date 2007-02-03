@@ -24,8 +24,9 @@ urlpatterns = patterns('',
 		       (r'^league/', include('goimcommunity.leaguesystem.urls')),
 
                        (r'^board/', include('sphene.sphboard.urls')),
-                       (r'^test/(?P<groupName>\w+)/board/', include('sphene.sphboard.urls')),
-                       (r'^test/(?P<groupName>\w+)/wiki/',  include('sphene.sphwiki.urls')),
+                       (r'^(?P<urlPrefix>test/(?P<groupName>\w+))/board/', include('sphene.sphboard.urls')),
+                       (r'^(?P<urlPrefix>test/(?P<groupName>\w+))/wiki/',  include('sphene.sphwiki.urls')),
+                       (r'^wiki/',  include('sphene.sphwiki.urls'), { 'urlPrefix': 'wiki', 'groupName': 'Sphene' }),
 
 
 		       (r'^static/(.*)$', 'django.views.static.serve', {'document_root': settings.ROOT_PATH + '/../static' }),

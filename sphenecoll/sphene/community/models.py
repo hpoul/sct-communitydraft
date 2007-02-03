@@ -30,3 +30,34 @@ class Theme(models.Model):
 
 	class Admin:
 		pass
+
+NAVIGATION_URL_TYPES = (
+        (0, 'Relative (e.g. /wiki/show/Start)'),
+        (1, 'Absolute (e.g. http://sphene.net')
+        )
+
+NAVIGATION_TYPES = (
+        (0, 'Left Main Navigation'),
+        (1, 'Top navigation')
+        )
+
+class Navigation(models.Model):
+        group = models.ForeignKey(Group)
+        label = models.CharField(maxlength = 250)
+        href  = models.CharField(maxlength = 250)
+        urltype = models.IntegerField( default = 0, choices = NAVIGATION_URL_TYPES )
+        sortorder = models.IntegerField( default = 100 )
+        navigationType = models.IntegerField( default = 0, choices = NAVIGATION_TYPES )
+
+
+        def __str__(self):
+                return self.label
+
+        class Meta:
+                ordering = ['sortorder']
+
+        class Admin:
+                list_display = ( 'label', 'group', 'href', 'navigationType' )
+                list_filter = ( 'group', 'navigationType' )
+                ordering = ['group', 'navigationType', 'sortorder']
+        

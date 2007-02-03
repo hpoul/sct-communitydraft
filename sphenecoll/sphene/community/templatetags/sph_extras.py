@@ -1,4 +1,5 @@
 from django import template
+from time import strftime
 
 register = template.Library()
 
@@ -14,8 +15,13 @@ def sph_markdown(value, arg=''):
         save_mode = arg == 'safe'
         md = markdown.Markdown(value,
                                  extensions = [ 'footnotes', 'wikilink' ],
-                                 extension_configs = { 'wikilink': [ ( 'base_url', '' ),
+                                 extension_configs = { 'wikilink': [ ( 'base_url', '../' ),
                                                                     ]},
                                  )
         return md.toString()
+
+
+@register.filter
+def sph_date(value):
+    return value.strftime( "%Y-%m-%d %H:%M:%S" )
 

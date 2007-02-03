@@ -4,11 +4,20 @@
 {% load sph_extras %}
 
 {% block content %}
-
+  <style>
+    .wiki_title { border-bottom: 1px solid black; }
+  </style>
   {% if snip %}
+    {% if snip.title %}
+      <h1 class="wiki_title">{{ snip.title }}</h1>
+    {% else %}
+      <h1 class="wiki_title">{{ snip.name }}</h1>
+    {% endif %}
+    <small>{{ snip.name }} - Last Change: {{ snip.changed|sph_date }} by {% sphboard_displayUserName snip.editor %}{% if perms.sphwiki.add_wikisnip %} - [ <a href="../../edit/{{ snip.name }}" >Edit</a> ]{% endif %}</small><br/>
+
     {{ snip.body|sph_markdown }}
   {% else %}
-    Snip <strong>{{ snipName }}</strong> does not yet exist.
+    Snip <strong>{{ snipName }}</strong> does not yet exist. {% if perms.sphwiki.add_wikisnip %}<a href="../../edit/{{ snipName }}">Create It.</a>{% endif %}
   {% endif %}
 
 {% endblock %}

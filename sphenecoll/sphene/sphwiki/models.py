@@ -8,17 +8,19 @@ from datetime import datetime
 
 
 class WikiSnip(models.Model):
-    name = models.CharField(maxlength = 250)
-    group = models.ForeignKey(Group)
+    name = models.CharField(maxlength = 250, editable = False)
+    title = models.CharField(maxlength = 250, blank = True)
+    group = models.ForeignKey(Group, editable = False)
     body = models.TextField()
-    creator = models.ForeignKey(User, related_name = 'wikisnip_created', editable = True)
+    creator = models.ForeignKey(User, related_name = 'wikisnip_created', editable = False)
     created = models.DateTimeField(editable = False)
-    editor  = models.ForeignKey(User, related_name = 'wikisnip_edited', editable = True)
+    editor  = models.ForeignKey(User, related_name = 'wikisnip_edited', editable = False)
     changed = models.DateTimeField(editable = False)
 
     def save(self):
         if not self.id:
             self.created = datetime.today()
+            self.creator = self.editor
         self.changed = datetime.today()
         super(WikiSnip, self).save()
 

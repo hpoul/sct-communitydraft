@@ -8,4 +8,5 @@ urlpatterns = patterns('',
                                               )
 urlpatterns += patterns('sphene.sphwiki.views',
                         (r'^show/(?P<snipName>[\w/]+)/$', 'showSnip'),
+                        (r'^edit/(?P<snipName>[\w/]+)/$', 'editSnip'),
                         )

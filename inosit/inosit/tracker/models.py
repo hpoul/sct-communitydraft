@@ -58,6 +58,9 @@ class TimeEntry(models.Model):
     def __str__(self):
         return self.description;
 
+    class Meta:
+        ordering = [ '-start' ]
+
     class Admin:
     	list_filter = ['task','owner']
 	list_display = ('task', 'owner', 'project', 'description', 'duration', 'start', 'end')

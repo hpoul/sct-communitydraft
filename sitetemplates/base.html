@@ -19,17 +19,26 @@
     <div id="navigation">
       {% block navigation %}
         <ul>
-          <li>Navigation Point 1</li>
-          <li>Navigation Point 2</li>
+          {% for nav in navigation_left %}
+            <li>
+              {% ifequal nav.urltype 0 %}
+                <a href="/{{ urlPrefix }}{{ nav.href }}">{{ nav.label }}</a>
+              {% else %}
+                <a href="{{ nav.href }}">{{ nav.label }}</a>
+              {% endifequal %}
+            </li>
+          {% endfor %}
         </ul>
       {% endblock %}
     </div>
-    <div id="subnavigation">
-      <ul>
-        {% block subnavigation %}
-        {% endblock %}
-      </ul>
-    </div>
+    {% if navigation_sub %}
+      <div id="subnavigation">
+        <ul>
+          {% block subnavigation %}
+          {% endblock %}
+        </ul>
+      </div>
+    {% endif %}
     <div id="userblock">
       {% if user.is_authenticated %}
         You are logged in as {% sphboard_displayUserName user %}<br/>

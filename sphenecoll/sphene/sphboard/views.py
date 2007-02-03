@@ -7,8 +7,7 @@ from django.template.context import RequestContext
 
 from sphene.sphboard.models import Category, Post
 
-def showCategory(request, groupName = None, category_id = None):
-    print " ... hehe ... " + request.get_full_path()
+def showCategory(request, group = None, category_id = None):
     args = {
         'group__isnull': True,
         'parent__isnull': True,
@@ -41,7 +40,7 @@ def showCategory(request, groupName = None, category_id = None):
                         paginate_by = 3,
                         )
 
-def showThread(request, thread_id, groupName = None):
+def showThread(request, thread_id, group = None):
     thread = Post.objects.get( pk = thread_id )
     #thread = get_object_or_404(Post, pk = thread_id )
     return object_list( request = request,
@@ -57,7 +56,7 @@ def showThread(request, thread_id, groupName = None):
                         )
 
 
-def post(request, groupName = None):
+def post(request, group = None):
     thread = None
     category = None
     if 'thread' in request.POST:
