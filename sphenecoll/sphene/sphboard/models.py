@@ -42,7 +42,7 @@ class Category(models.Model):
     def testAllowance(self, user, level):
         if level == -1:
             return True;
-        if user == None:
+        if user == None or not user.is_authenticated:
             return False;
         if level == 0:
             return True;
