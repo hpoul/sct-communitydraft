@@ -95,7 +95,9 @@ def sphboard_displayPostForm(context, post = None):
     form = PostForm()
     if 'category' in context: category = context['category']
     else: category = None
+    if 'thread' in context: thread = context['thread']
+    else: thread = None
     
     return { 'form': form,
              'category': category,
-             'thread': context['thread'] }
+             'thread': thread, }
