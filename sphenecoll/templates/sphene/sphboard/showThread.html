@@ -15,15 +15,20 @@
         <td>{{ post.postdate|date:"Y-m-d H:i:s" }} - <strong>{{ post.subject|escape }}</strong></td>
       </tr>
       <tr>
-        <td class="sphboard_post_body">{{ post.body|escape|linebreaks }}</td>
+        <td class="sphboard_post_body">{{ post.body_escaped }}</td>
       </tr>
     {% endfor %}
   </table>
   <br/><br/>
   
   {% if allowPosting %}
-    {% include "sphene/sphboard/_displayPostForm.html" %}
-    <br/><br/>
+    {% sphboard_displayPostForm thread %}
+  {% else %}
+    {% if user.is_authenticated %}
+      You have no permission to post a reply.
+    {% else %}
+      Please login to post a reply.
+    {% endif %}
   {% endif %}
-
+  <br/><br/>
 {% endblock %}

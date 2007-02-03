@@ -1,4 +1,8 @@
 from django import template
+from django import newforms as forms
+from django.newforms import widgets
+from sphene.sphboard.models import Post
+from custom_widgets import TinyMCE
 
 register = template.Library()
 
@@ -66,3 +70,32 @@ def sphboard_pagination( pages, page ):
              'next': page + 1,
              'prev': page - 1,
              }
+
+@register.inclusion_tag('sphene/sphboard/_displayPostForm.html', takes_context=True)
+def sphboard_displayPostForm(context, post = None):
+    PostForm = forms.models.form_for_model(Post)
+    if post != None:
+        PostForm.base_fields['subject'].initial = 'Re: %s' % post.subject
+    """
+    body = PostForm.base_fields['body'].widget = TinyMCE( )
+    body.mce_settings = { 'mode': 'exact',
+                          'theme': 'advanced',
+                          'plugins': 'emotions',
+                          'theme_advanced_buttons3_add': 'emotions',
+                          'theme_advanced_toolbar_location': 'top',
+                          'theme_advanced_disable': 'styleselect,formatselect',
+                          'theme_advanced_buttons1' : 'bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,emotions',
+                          'theme_advanced_buttons2' : '',
+                          'theme_advanced_buttons3' : '',
+                          }
+    """
+    body = PostForm.base_fields['body'].widget
+    body.attrs['cols'] = 80
+    body.attrs['rows'] = 10
+    form = PostForm()
+    if 'category' in context: category = context['category']
+    else: category = None
+    
+    return { 'form': form,
+             'category': category,
+             'thread': context['thread'] }

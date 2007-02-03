@@ -41,7 +41,7 @@ MEDIA_ROOT = '/home/kahless/dev/python/diamanda/media/'
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
-MEDIA_URL = ''
+MEDIA_URL = '/static/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -97,6 +97,8 @@ import sys
 sys.path.append(ROOT_PATH + '/../sphenecoll')
 sys.path.append(ROOT_PATH + '/../inosit')
 sys.path.append(ROOT_PATH + '/../libs/markdown')
+sys.path.append(ROOT_PATH + '/../libs/custom')
+sys.path.append(ROOT_PATH + '/../libs/common')
 
 
 INSTALLED_APPS = (

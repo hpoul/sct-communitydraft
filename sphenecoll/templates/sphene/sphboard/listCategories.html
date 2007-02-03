@@ -45,8 +45,14 @@
   {% endif %}
 
   {% if allowPostThread %}
-    {% include "sphene/sphboard/_displayPostForm.html" %}
-    <br/><br/>
+    {% sphboard_displayPostForm %}
+  {% else %}
+    {% if user.is_authenticated %}
+      You have no permission to create a new thread.
+    {% else %}
+      Please login to create a new thread.
+    {% endif %}
   {% endif %}
+  <br/><br/>
 
 {% endblock %}
