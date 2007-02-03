@@ -17,13 +17,12 @@ def showCategory(request, group = None, category_id = None):
         args['parent__isnull'] = False
         args['parent'] = category_id
         categoryObject = Category.objects.get( pk = category_id )
+    if group != None:
+        args['group__isnull'] = False
+        args['group'] = group
+        
     categories = Category.objects.filter( **args )
-    """
-    return render_to_response('sphene/sphboard/listCategories.html',
-                              { 'rootCategories': categories,
-                                'category': categoryObject,
-                                'allowPostThread': categoryObject and categoryObject.allowPostThread( request.user ) })
-                                """
+    
     context = { 'rootCategories': categories,
                 'category': categoryObject,
                 'allowPostThread': categoryObject and categoryObject.allowPostThread( request.user ) }
