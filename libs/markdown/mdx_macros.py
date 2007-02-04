@@ -33,9 +33,13 @@ class Macros (markdown.BasePattern):
             macroParams = m.group('macroParams')
             allParams = dict()
             if macroParams is not None:
-                paramRe = re.compile( '(?P<name>\w+?)=(?P<value>".*?"|.+?)(?=\s|$)', re.S )
+                paramRe = re.compile( '(?P<name>\w+?)=(?:"(?P<escapedValue>.*?)"|(?P<value>.+?))(?=\s|$)', re.S )
                 for param in paramRe.finditer( macroParams ):
-                    allParams[param.group('name')] = param.group('value')
+                    if param.group('escapedValue') is None:
+                        value = param.group('value')
+                    else:
+                        value = param.group('escapedValue')
+                    allParams[param.group('name')] = value
             return self.macros[macroName].handleMacroCall(doc, allParams)
         a = doc.createTextNode(m.group())
         return a
