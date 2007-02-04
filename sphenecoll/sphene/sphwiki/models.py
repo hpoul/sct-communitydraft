@@ -29,3 +29,24 @@ class WikiSnip(models.Model):
 
     class Admin:
         pass
+
+class WikiAttachment(models.Model):
+    snip = models.ForeignKey(Group, editable = False)
+    uploader = models.ForeignKey(User, editable = False)
+    uploaded = models.DateTimeField(editable = False)
+    fileupload = models.FileField( upload_to = 'var/sphene/sphwiki/attachment/%Y/%m/%d' )
+    description = models.TextField()
+
+    def save(self):
+        self.uploaded = datetime.today()
+        super(WikiAttachment, self).save()
+
+    def __str__(self):
+        return self.fileupload
+
+    class Admin:
+        pass
+
+
+
+
