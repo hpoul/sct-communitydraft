@@ -87,7 +87,7 @@ def editSnip(request, group, snipName):
             snip.name = snipName
             snip.editor = request.user
             snip.save()
-            return HttpResponseRedirect( '../../show/%s' % snip.name )
+            return HttpResponseRedirect( '../../show/%s/' % snip.name )
 
     else:
         form = SnipForm()
