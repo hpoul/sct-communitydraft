@@ -90,6 +90,13 @@ SPH_HOST_MIDDLEWARE_URLCONF_DEFAULT = (
 SPH_HOST_MIDDLEWARE_URLCONF_MAPPING = {
     'community.spacecombat2.net': { 'groupName': 'SpaceCombat2' },
     'community.spacecombat2.com': { 'groupName': 'SpaceCombat2' },
+    '127.0.0.1:8000': { 'groupName': 'SpaceCombat2' },
+}
+
+SPH_HOST_MIDDLEWARE_URLCONF_MAP = {
+    'community.spacecombat2.net': 'urlconfs.sc2_community',
+    'community.spacecombat2.com': 'urlconfs.sc2_community',
+    '127.0.0.1:8000': 'urlconfs.sc2_community',
 }
 
 TEMPLATE_DIRS = (
