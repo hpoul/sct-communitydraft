@@ -86,3 +86,17 @@ div#content {
 	margin-left: 240px;
 }
 
+
+
+
+ul.news li {
+        padding-bottom: 20px;
+}
+
+ul.news .subject {
+        font-weight: bold;
+}
+
+ul.news .comments {
+        padding-top: 5px;
+}
