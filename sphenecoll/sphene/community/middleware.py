@@ -6,7 +6,10 @@ from sphene.community.models import Group
 class GroupMiddleware(object):
     def process_view(self, request, view_func, view_args, view_kwargs):
         if 'urlPrefix' in view_kwargs:
-            request.attributes['urlPrefix'] = view_kwargs['urlPrefix']
+            urlPrefix = view_kwargs['urlPrefix']
+            if urlPrefix != '':
+                urlPrefix = '/' + urlPrefix
+            request.attributes['urlPrefix'] = urlPrefix
             del view_kwargs['urlPrefix']
         if 'groupName' in view_kwargs:
             group = get_object_or_404(Group, name = view_kwargs['groupName'] )

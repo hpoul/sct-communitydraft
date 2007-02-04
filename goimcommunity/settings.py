@@ -17,7 +17,7 @@ DATABASE_ENGINE = 'postgresql'           # 'postgresql', 'mysql', 'sqlite3' or '
 DATABASE_NAME = 'djangotest'             # Or path to database file if using sqlite3.
 DATABASE_USER = 'django'             # Not used with sqlite3.
 DATABASE_PASSWORD = 'test'         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_HOST = '127.0.0.1'             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. All choices can be found here:

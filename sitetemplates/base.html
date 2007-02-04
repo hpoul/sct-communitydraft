@@ -24,7 +24,7 @@
           {% for nav in navigation_left %}
             <li>
               {% ifequal nav.urltype 0 %}
-                <a href="/{{ urlPrefix }}{{ nav.href }}">{{ nav.label }}</a>
+                <a href="{{ urlPrefix }}{{ nav.href }}">{{ nav.label }}</a>
               {% else %}
                 <a href="{{ nav.href }}">{{ nav.label }}</a>
               {% endifequal %}
