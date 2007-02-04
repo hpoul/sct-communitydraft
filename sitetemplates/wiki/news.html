@@ -6,7 +6,7 @@
       <div class="subject">{{ thread.postdate|sph_date }}: {{ thread.subject }}</div>
       <div class="body">{{ thread.body }}</div>
       {% if baseURL %}
-        <div class="comments"><a href="{{ baseURL }}/thread/{{ thread.id }}">Comments</a></div>
+        <div class="comments"><a href="{{ baseURL }}/thread/{{ thread.id }}/">Comments</a></div>
       {% endif %}
     </li>
   {% endfor %}
