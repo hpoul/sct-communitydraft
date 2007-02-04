@@ -2,6 +2,7 @@
 
 import os
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+from django.conf.urls.defaults import *
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -60,6 +61,7 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
 #    'sphene.sphboard.middleware.PerformanceMiddleware',
+    'sphene.community.middleware.MultiHostMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -77,6 +79,18 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 ROOT_URLCONF = 'goimcommunity.urls'
+
+SPH_HOST_MIDDLEWARE_URLCONF_DEFAULT = (
+#    (r'^/board/', include('sphene.sphboard.urls'), { 'groupName': None }),
+#    (r'^/wiki/',  include('sphene.sphwiki.urls'), { 'groupName': None }),
+    (r'^/accounts/login/$', 'django.contrib.auth.views.login'),
+    (r'^/accounts/logout/$', 'django.contrib.auth.views.logout' ),
+)
+
+SPH_HOST_MIDDLEWARE_URLCONF_MAPPING = {
+    'community.spacecombat2.net': { 'groupName': 'SpaceCombat2' },
+    'community.spacecombat2.com': { 'groupName': 'SpaceCombat2' },
+}
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
