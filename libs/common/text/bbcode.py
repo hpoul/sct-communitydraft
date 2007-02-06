@@ -32,6 +32,10 @@
 ##    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ##    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+####
+# 2007-02-06, herbert.poul@gmail.com:
+#        Small modification to allow nested tags in [url]'s
+
 ##########################################################################
 ## Module to convert BBCode to XHTML, featuring:
 ##
@@ -230,11 +234,11 @@ class UrlTag(BBTag):
             url = node.parameter.strip()
         else:
             url = node.children[0].text.strip()
-        linktext = node.children[0].text.strip()
+        linktext = node.render_children_xhtml() #node.children[0].text.strip()
         if len(url) == 0:
             return ''
         else:
-            return '<a rel="nofollow" href="' + escape(url) + '">' + escape(linktext) + '</a>'
+            return '<a rel="nofollow" href="' + escape(url) + '">' + linktext + '</a>'
 
 class QuoteTag(BBTag):
     def render_node_xhtml(self, node):
@@ -318,7 +322,7 @@ _TAGS = (
     EmailTag    ('email',      ('text',),      'div'),
     
     # <a>
-    UrlTag      ('url',        ('text',),      'div'),
+    UrlTag      ('url',        _INLINE_TAGS,      'div'),
     
     # <p>
     HtmlEquivTag('p',          _INLINE_TAGS,   None,
