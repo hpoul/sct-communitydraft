@@ -83,7 +83,7 @@ class Category(models.Model):
                 session[sKey] = val
             self._lastVisit = val['originalLastVisit']
         except CategoryLastVisit.DoesNotExist:
-            lastVisit = CategoryLastVisit(user = user, category = self)
+            self.lastVisit = CategoryLastVisit(user = user, category = self)
         lastVisit.lastvisit = datetime.today()
         lastVisit.save()
         return self._lastVisit
