@@ -5,9 +5,17 @@ from django.views.generic.list_detail import object_list
 from django.db.models import Q
 from django.template.context import RequestContext
 
-from sphene.sphboard.models import Category, Post
+from sphene.sphboard.models import Category, Post, POST_STATUSES
 
-def showCategory(request, group = None, category_id = None):
+class SpheneModelInitializer:
+    def __init__(self, request):
+        self.request = request
+
+    def init_model(self, model):
+        model.do_init( self, self.request.session, self.request.user )
+        
+
+def showCategory(request, group = None, category_id = None, showType = None):
     args = {
         'group__isnull': True,
         'parent__isnull': True,
@@ -20,27 +28,47 @@ def showCategory(request, group = None, category_id = None):
     if group != None:
         args['group__isnull'] = False
         args['group'] = group
-        
-    categories = Category.objects.filter( **args )
+
+    if showType == 'threads':
+        categories = []
+    else:
+        categories = Category.objects.filter( **args ).add_initializer( SpheneModelInitializer(request) )
     
     context = { 'rootCategories': categories,
                 'category': categoryObject,
-                'allowPostThread': categoryObject and categoryObject.allowPostThread( request.user ) }
+                'allowPostThread': categoryObject and categoryObject.allowPostThread( request.user ),
+                'category_id': category_id, }
     templateName = 'sphene/sphboard/listCategories.html'
     if categoryObject == None:
-        return render_to_response( templateName, context,
-                                   context_instance = RequestContext(request) )
+        if showType != 'threads':
+            return render_to_response( templateName, context,
+                                       context_instance = RequestContext(request) )
+        if group != None: thread_args = { 'category__group': group }
+        else: thread_args = { 'category__group__isnull': True }
+        thread_args[ 'thread__isnull'] = True
+        context['isShowLatest'] = True
+        thread_list = Post.objects.filter( **thread_args )
+    else:
+        thread_list = categoryObject.thread_list()
+
+    thread_list = thread_list.extra( select = { 'latest_postdate': 'SELECT MAX(postdate) FROM sphboard_post AS postinthread WHERE postinthread.thread_id = sphboard_post.id OR postinthread.id = sphboard_post.id', 'is_sticky': 'status & %d' % POST_STATUSES['sticky'] } ).add_initializer( SpheneModelInitializer(request) )
+    if showType != 'threads':
+        thread_list = thread_list.order_by( '-is_sticky', '-latest_postdate' )
+    else:
+        thread_list = thread_list.order_by( '-latest_postdate' )
+
     return object_list( request = request,
-                        queryset = categoryObject.thread_list().order_by( '-postdate' ),
+                        queryset = thread_list,
                         template_name = templateName,
                         extra_context = context,
                         template_object_name = 'thread',
                         allow_empty = True,
-                        paginate_by = 3,
+                        paginate_by = 10,
                         )
 
 def showThread(request, thread_id, group = None):
     thread = Post.objects.get( pk = thread_id )
+    thread.touch( request.session, request.user )
     #thread = get_object_or_404(Post, pk = thread_id )
     return object_list( request = request,
                         #queryset = Post.objects.filter( Q( pk = thread_id ) | Q( thread = thread ) ).order_by('postdate'),
@@ -54,6 +82,17 @@ def showThread(request, thread_id, group = None):
                         template_object_name = 'post',
                         )
 
+def options(request, thread_id, group = None):
+    thread = Post.objects.get( pk = thread_id )
+
+    if request['cmd'] == 'makeSticky':
+        thread.set_sticky(True)
+    elif request['cmd'] == 'removeSticky':
+        thread.set_sticky(False)
+
+    thread.save()
+    
+    return HttpResponseRedirect( '../../thread/%s/' % thread.id )
 
 def post(request, group = None):
     thread = None

@@ -6,6 +6,7 @@ from sphene.community.models import Group
 
 from django.utils import html
 from text import bbcode
+from datetime import datetime
 
 import re
 
@@ -21,10 +22,19 @@ POSTS_ALLOWED_CHOICES = (
 class Category(models.Model):
     name = models.CharField(maxlength = 250)
     group = models.ForeignKey(Group, null = True, blank = True)
-    parent = models.ForeignKey('self', related_name = 'childs', null = True, blank = True)
+    parent = models.ForeignKey('self', related_name = '_childs', null = True, blank = True)
     description = models.TextField(blank = True)
     allowthreads = models.IntegerField( default = 0, choices = POSTS_ALLOWED_CHOICES )
     allowreplies = models.IntegerField( default = 0, choices = POSTS_ALLOWED_CHOICES )
+
+    def do_init(self, initializer, session, user):
+        self._initializer = initializer
+        self._session = session
+        self._user = user
+        self.touch( session, user )
+
+    def get_childs(self):
+        return self._childs.all().add_initializer(getattr(self, '_initializer', None))
 
     def canContainPosts(self):
         return self.allowthreads != 3
@@ -53,11 +63,89 @@ class Category(models.Model):
             return True;
         return False;
 
+    """
+      Touches the category object by updating 'lastVisit'
+      Returns the datetime object of when it was last visited.
+    """
+    def touch(self, session, user):
+        # Check if we were already "touched" ;)
+        if getattr(self, '_touched', False): return self._lastVisit
+        self._touched = True
+        self.hasNewPosts = self._hasNewPosts(session, user)
+        if not user.is_authenticated(): return None
+        try:
+            lastVisit = CategoryLastVisit.objects.get( category = self, user = user )
+            sKey = self._getSessionKey()
+            val = session.get( sKey )
+            if not val or not val.has_key( 'originalLastVisit' ):
+                val = { 'originalLastVisit': lastVisit.lastvisit,
+                        'originalLastVisitSet': datetime.today(), }
+                session[sKey] = val
+            self._lastVisit = val['originalLastVisit']
+        except CategoryLastVisit.DoesNotExist:
+            lastVisit = CategoryLastVisit(user = user, category = self)
+        lastVisit.lastvisit = datetime.today()
+        lastVisit.save()
+        return self._lastVisit
+
+    def _hasNewPosts(self, session, user):
+        if not user.is_authenticated(): return False
+        try:
+            latestPost = Post.objects.filter( category = self ).latest( 'postdate' )
+        except Post.DoesNotExist:
+            return False
+        
+        sKey = self._getSessionKey()
+        val = session.get( sKey )
+        if not val or not val.has_key('originalLastVisit'):
+            # if no original lastvisit is stored, load lastvisit from DB.
+            try:
+                lastVisit = CategoryLastVisit.objects.get( category = self, user = user )
+            except CategoryLastVisit.DoesNotExist:
+                return False
+            return lastVisit.lastvisit < latestPost.postdate
+
+        if val['originalLastVisit'] > latestPost.postdate:
+            return False
+
+        if not val.has_key('thread_lasthits'):
+            return True
+
+        lasthits = val['thread_lasthits']
+
+        # Check all posts to see if they are new ....
+        allNewPosts = Post.objects.filter( category = self,
+                                           postdate__gt = val['originalLastVisit'], )
+
+        for post in allNewPosts:
+            threadid = post.thread and post.thread.id or post.id
+            if not lasthits.has_key( threadid ) or lasthits[threadid] < post.postdate:
+                return True
+
+        # All posts are read .. cool.. we can remove 'thread_lasthits' and adept 'originalLastVisit'
+        del val['thread_lasthits']
+        del val['originalLastVisit']
+        session[sKey] = val # Store the value back into the session so it gets stored.
+        return False
+
+    def _getSessionKey(self):
+        return 'sphene_sphboard_category_%d' % self.id;
+
     def __str__(self):
         return self.name;
     
     class Admin:
         search_fields = ('name')
+
+class CategoryLastVisit(models.Model):
+    user = models.ForeignKey(User)
+    lastvisit = models.DateTimeField()
+    category = models.ForeignKey(Category)
+
+    class Admin:
+        list_display = ('user', 'lastvisit')
+        list_filter = ('user',)
+        pass
 
 ALLOWED_TAGS = {
     'p': ( 'align' ),
@@ -97,15 +185,45 @@ def htmltag_replace(test):
 def bbcode_replace(test):
     print "bbcode ... %s %s %s" % (test.group(1), test.group(2), test.group(3))
     return test.group()
+POST_STATUS_DEFAULT = 0
+POST_STATUS_STICKY = 1
+POST_STATUS_CLOSED = 2
+POST_STATUS_POLL = 4
 
+POST_STATUSES = {
+    'default': 0,
+    'sticky': 1,
+    'closed': 2,
+
+    'poll': 4,
+    }
     
 class Post(models.Model):
+    status = models.IntegerField(default = 0, editable = False )
     category = models.ForeignKey(Category, related_name = 'posts', editable = False )
     subject = models.CharField(maxlength = 250)
     body = models.TextField()
     thread = models.ForeignKey('self', null = True, editable = False )
     postdate = models.DateTimeField( auto_now_add = True, editable = False )
     author = models.ForeignKey(User, editable = False )
+
+    def do_init(self, initializer, session, user):
+        self.hasNewPosts = self._hasNewPosts(session, user)
+
+    def is_sticky(self):
+        return self.status & POST_STATUS_STICKY
+    def is_closed(self):
+        return self.status & POST_STATUS_CLOSED
+    def is_poll(self):
+        return self.status & POST_STATUS_POLL
+
+    def set_sticky(self, sticky):
+        if sticky: self.status = self.status | POST_STATUS_STICKY
+        else: self.status = self.status ^ POST_STATUS_STICKY
+
+    def set_closed(self, closed):
+        if closed: self.status = self.status | POST_STATUS_CLOSED
+        else: self.status = self.status ^ POST_STATUS_CLOSED
 
     def get_thread(self):
         if self.thread == None: return self;
@@ -139,6 +257,35 @@ class Post(models.Model):
             bbcode = regex.sub( bbcode_replace, body )
             """
             return bbcode.bb2xhtml(body)
+
+    def touch(self, session, user):
+        return self._touch( session, user )
+
+    def _touch(self, session, user):
+        if not user.is_authenticated(): return None
+        if not self._hasNewPosts(session, user): return
+        sKey = self.category._getSessionKey()
+        val = session.get( sKey )
+        if not val: val = { }
+        if not val.has_key( 'thread_lasthits' ): val['thread_lasthits'] = { }
+        val['thread_lasthits'][self.id] = datetime.today()
+        session[sKey] = val
+
+    def _hasNewPosts(self, session, user):
+        if not user.is_authenticated(): return False
+        try:
+            latestPost = Post.objects.filter( thread = self.id ).latest( 'postdate' )
+        except Post.DoesNotExist:
+            # if no post was found, the thread is the latest post ...
+            latestPost = self
+        categoryLastVisit = self.category.touch(session, user)
+        if categoryLastVisit > latestPost.postdate:
+            return False
+        sKey = self.category._getSessionKey()
+        val = session.get( sKey )
+        if not val or not val.has_key( 'thread_lasthits' ) or not val['thread_lasthits'].has_key(self.id):
+            return True
+        return val['thread_lasthits'][self.id] < latestPost.postdate
 
     def __str__(self):
         return self.subject

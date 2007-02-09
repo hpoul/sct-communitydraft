@@ -5,12 +5,12 @@
 
 {% block content %}
 
-  {% sphboard_displayBreadcrumbsForCategory category %}<br/><br/>
+  <a href="../../latest/{{ category_id }}/">Latest</a> | {% sphboard_displayBreadcrumbsForCategory category %}<br/><br/>
 
   {% if rootCategories %}
   <table class="sphboard_categories">
     <tr>
-      <th colspan='5' width='100%'>Title</th>
+      <th colspan='6'>Title</th>
       <th>Threads</th>
       <th>Posts</th>
       <th>Last Post</th>
@@ -20,39 +20,40 @@
   <br/><br/>
   {% endif %}
 
-  {% if category and category.canContainPosts %}
+  {% if isShowLatest or category.canContainPosts %}
     <table class="sphboard_thread_list">
       <tr>
-        <th colspan='3'>Threads</th>
+        <th class="sphboard_mainhead" colspan="4">Threads</th>
       </tr>
       <tr>
-        <th>Subject / Author</th>
+        <th colspan="2">Subject / Author</th>
         <th>Posts</th>
         <th>Last Post</th>
       </tr>
       {% for thread in thread_list %}
         <tr>
-          <td><a href="../../thread/{{ thread.id }}/">{{ thread.subject }}</a><br/><small>by {% sphboard_displayUserName thread.author %}</small></td>
-          <td>{{ thread.postCount }}</td>
-          <td>{% sphboard_latestPost thread.latestPost 0 %}
+          <td width="20px"><img src="/static/sphene/sphboard/icons/{% if thread.hasNewPosts %}new{% endif %}folder.gif" width='16px' height='16px' /></td>
+          <td>{% if thread.is_sticky %}Sticky: {% endif %}<a href="../../thread/{{ thread.id }}/">{{ thread.subject }}</a><br/><small>{% if isShowLatest %}{% sphboard_displayBreadcrumbsForCategory thread.category 1 %} - {% endif %}by {% sphboard_displayUserName thread.author %}</small></td>
+          <td class="sphboard_postcount">{{ thread.postCount }}</td>
+          <td class="sphboard_latestpost">{% sphboard_latestPost thread.latestPost 0 %}
         </tr>
       {% endfor %}
       <tr>
-        <td colspan='3'><span style="float:left;">{{ hits }} Threads in this category yet.</span><span style="display:block;float:right;">{% sphboard_pagination pages page %}</span></td>
+        <td colspan="4"><span style="float:left;">{{ hits }} Threads in this category yet.</span><span style="display:block;float:right;">{% sphboard_pagination pages page %}</span></td>
       </tr>
     </table>
     <br/><br/>
-  {% endif %}
-
-  {% if allowPostThread %}
-    {% sphboard_displayPostForm %}
-  {% else %}
-    {% if user.is_authenticated %}
-      You have no permission to create a new thread.
+    {% if allowPostThread %}
+      {% sphboard_displayPostForm %}
     {% else %}
-      Please login to create a new thread.
+      {% if user.is_authenticated %}
+        You have no permission to create a new thread.
+      {% else %}
+        Please login to create a new thread.
+      {% endif %}
     {% endif %}
   {% endif %}
+
   <br/><br/>
 
 {% endblock %}

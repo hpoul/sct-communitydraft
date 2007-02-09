@@ -11,7 +11,6 @@ class MacrosExtension (markdown.Extension):
         # Override defaults with user settings
         for key, value in configs :
             # self.config[key][0] = value
-            print "key: %s" % key
             self.setConfig(key, value)
 
     def extendMarkdown(self, md, md_globals):

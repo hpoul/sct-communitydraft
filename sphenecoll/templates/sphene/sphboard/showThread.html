@@ -4,7 +4,17 @@
 
 {% block content %}
   {% sphboard_displayBreadcrumbsForThread thread %}
-  <br/><br/>
+  <br/>
+  {% if perms.post.change_post %}
+    Thread Options: 
+      {% if thread.is_sticky %}
+        <a href="../../options/{{ thread.id }}/?cmd=removeSticky">Remove Sticky</a>
+      {% else %}
+        <a href="../../options/{{ thread.id }}/?cmd=makeSticky">Make Sticky</a>
+      {% endif %}
+      <br/>
+  {% endif %}
+  <br/>
   <table class="sphboard_post_list">
     {% for post in post_list %}
       <tr>
