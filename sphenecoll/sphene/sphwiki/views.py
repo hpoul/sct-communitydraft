@@ -28,7 +28,7 @@ def showSnip(request, group, snipName):
                                context_instance = RequestContext(request) )
 
 def attachment(request, group, snipName):
-    snip = WikiSnip.objects.get( name__exact = snipName )
+    snip = WikiSnip.objects.get( name__exact = snipName, group = group )
     res = WikiAttachment.objects.filter( snip = snip )
     return object_list( request = request,
                         queryset = WikiAttachment.objects.filter( snip = snip ),
