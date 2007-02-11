@@ -10,4 +10,5 @@ urlpatterns = patterns('',
                                                                      'urlPrefix': '' }),
                        (r'^accounts/login/$', 'django.contrib.auth.views.login'),
                        (r'^accounts/logout/$', 'django.contrib.auth.views.logout' ),
+		       (r'^accounts/register/$', 'sphene.community.views.registration' ),
                        )

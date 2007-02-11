@@ -42,7 +42,8 @@ urlpatterns = patterns('',
 
                        (r'^accounts/login/$', 'django.contrib.auth.views.login'),
                        (r'^accounts/logout/$','django.contrib.auth.views.logout'),
-
+                       (r'^accounts/register/$', 'sphene.community.views.register' ),
+                       
 
 #                       (r'^forum/', include('myghtyboard.URLconf')), # forum
 #                       (r'^muh/', 'wiki.views.show_page'), # wiki main page under /

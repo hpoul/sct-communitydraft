@@ -115,6 +115,7 @@ TEMPLATE_DIRS = (
 import sys
 #sys.path.append('/home/kahless/dev/python/diamanda/diamandas/')
 #sys.path.append('/home/kahless/dev/python/diamanda')
+sys.path.append(ROOT_PATH)
 sys.path.append(ROOT_PATH + '/../sphenecoll')
 sys.path.append(ROOT_PATH + '/../inosit')
 sys.path.append(ROOT_PATH + '/../libs/markdown')
@@ -178,3 +179,5 @@ SITE_IMAGES_SRC_PATH = '/site_media/images/'
 # Other
 USE_BANS = False # use WIkiBans to prevent baned from add/edit actions
 
+# settings_local overwrites a few settings from here, and has to define SECRET_KEY
+from settings_local import *
