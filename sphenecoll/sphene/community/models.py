@@ -7,6 +7,10 @@ class Group(models.Model):
 	longname = models.CharField(maxlength = 250)
 	default_theme = models.ForeignKey('Theme', null = True, blank = True)
 	parent = models.ForeignKey('Group', null = True, blank = True)
+        baseurl = models.CharField(maxlength = 250)
+
+        def get_name(self):
+                return longname or name
 
         def recursiveName(self):
                 recname = ''
