@@ -197,7 +197,8 @@ POST_STATUSES = {
 
     'poll': 4,
     }
-    
+
+
 class Post(models.Model):
     status = models.IntegerField(default = 0, editable = False )
     category = models.ForeignKey(Category, related_name = 'posts', editable = False )
@@ -208,6 +209,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, editable = False )
 
     def do_init(self, initializer, session, user):
+        self._initializer = initializer
         self.hasNewPosts = self._hasNewPosts(session, user)
 
     def is_sticky(self):
@@ -224,6 +226,10 @@ class Post(models.Model):
     def set_closed(self, closed):
         if closed: self.status = self.status | POST_STATUS_CLOSED
         else: self.status = self.status ^ POST_STATUS_CLOSED
+
+    def set_poll(self, poll):
+        if poll: self.status = self.status | POST_STATUS_POLL
+        else: self.status = self.status ^ POST_STATUS_POLL
 
     def get_thread(self):
         if self.thread == None: return self;
@@ -287,8 +293,69 @@ class Post(models.Model):
             return True
         return val['thread_lasthits'][self.id] < latestPost.postdate
 
+    def poll(self):
+        try:
+            return self.poll_set.all().add_initializer( getattr(self, '_initializer', None) ).get()
+        except Poll.DoesNotExist:
+            return None
+
     def __str__(self):
         return self.subject
 
     class Admin:
         pass
+
+
+
+class Poll(models.Model):
+    post = models.ForeignKey(Post, editable = False)
+    question = models.CharField( maxlength = 250 )
+    choices_per_user = models.IntegerField( )
+
+    def do_init(self, initializer, session, user):
+        self._initializer = initializer
+        self._user = user
+        
+    def multiplechoice(self):
+        return self.choices_per_user != 1
+
+    def choices(self):
+        return self.pollchoice_set.all()
+
+    def has_voted(self, user = None):
+        return self.pollvoters_set.filter( user = user or self._user ).count() > 0
+        """try:
+            return True
+        except PollVoters.DoesNotExist:
+            return False
+        """
+
+    def total_voters(self):
+        from django.db import connection
+        cursor = connection.cursor()
+        cursor.execute("SELECT COUNT(DISTINCT user_id) as totalvoters FROM sphboard_pollvoters WHERE poll_id = %s", [self.id])
+        row = cursor.fetchone()
+        return row[0]
+
+    def total_votes(self):
+        return self.pollvoters_set.count()
+
+    def null_votes(self):
+        return self.pollvoters_set.filter( choice__isnull = True ).count()
+
+    class Admin:
+        pass
+
+class PollChoice(models.Model):
+    poll = models.ForeignKey(Poll, editable = False)
+    choice = models.CharField( maxlength = 250 )
+    count = models.IntegerField()
+
+    class Admin:
+        pass
+
+class PollVoters(models.Model):
+    poll = models.ForeignKey(Poll, editable = False)
+    choice = models.ForeignKey(PollChoice, null = True, blank = True, editable = False)
+    user = models.ForeignKey(User, editable = False)
+

@@ -2,6 +2,7 @@ from django import template
 from django import newforms as forms
 from django.newforms import widgets
 from sphene.sphboard.models import Post
+from sphene.sphboard.views import PostForm
 from custom_widgets import TinyMCE
 
 register = template.Library()
@@ -47,8 +48,8 @@ def sphboard_displayBreadcrumbs( category = None, post = None, linkall = False )
     return { 'thread': post, 'categories': breadcrumbs, 'current': not linkall and current, 'linkall': linkall }
 
 @register.inclusion_tag('sphene/sphboard/_displayBreadcrumbs.html')
-def sphboard_displayBreadcrumbsForThread( post ):
-    return sphboard_displayBreadcrumbs( post = post )
+def sphboard_displayBreadcrumbsForThread( post, linkall = False ):
+    return sphboard_displayBreadcrumbs( post = post, linkall = linkall )
 
 @register.inclusion_tag('sphene/sphboard/_displayBreadcrumbs.html')
 def sphboard_displayBreadcrumbsForCategory( category, linkall = False ):
@@ -71,9 +72,10 @@ def sphboard_pagination( pages, page ):
              'prev': page - 1,
              }
 
+### sphboard_displayPostForm is deprecated, there is a view function for this !!
 @register.inclusion_tag('sphene/sphboard/_displayPostForm.html', takes_context=True)
 def sphboard_displayPostForm(context, post = None):
-    PostForm = forms.models.form_for_model(Post)
+    #PostForm = forms.models.form_for_model(Post)
     if post != None:
         PostForm.base_fields['subject'].initial = 'Re: %s' % post.subject
     """

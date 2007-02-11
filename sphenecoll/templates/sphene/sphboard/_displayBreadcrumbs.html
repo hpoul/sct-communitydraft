@@ -11,5 +11,9 @@
 {% endif %}
 {% if thread %}
   &gt;&gt;
-  {{ thread.subject }}
+  {% if linkall %}
+    <a href="../../thread/{{ thread.id }}/">{{ thread.subject }}</a>
+  {% else %}
+    {{ thread.subject }}
+  {% endif %}
 {% endif %}

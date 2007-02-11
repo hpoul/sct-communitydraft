@@ -19,6 +19,7 @@ class MultiHostMiddleware:
 
 class GroupMiddleware(object):
     def process_view(self, request, view_func, view_args, view_kwargs):
+        request.attributes = { }
         if 'urlPrefix' in view_kwargs:
             urlPrefix = view_kwargs['urlPrefix']
             if urlPrefix != '':

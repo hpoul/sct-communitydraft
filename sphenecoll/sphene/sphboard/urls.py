@@ -11,6 +11,7 @@ urlpatterns += patterns('sphene.sphboard.views',
                         (r'^latest/(?P<category_id>\d+)/$', 'showCategory', { 'showType': 'threads' }),
                         (r'^thread/(?P<thread_id>\d+)/$', 'showThread'),
                         (r'^options/(?P<thread_id>\d+)/$', 'options'),
-                        (r'^post/$', 'post'),
+                        (r'^post/(?P<category_id>\d+)/$', 'post'),
+                        (r'^vote/(?P<thread_id>\d+)/$', 'vote'),
                        )
 
