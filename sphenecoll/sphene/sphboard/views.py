@@ -118,7 +118,6 @@ def post(request, group = None, category_id = None):
         thread = get_object_or_404(Post, pk = request.REQUEST['thread'])
         category = thread.category
         context['thread'] = thread
-        PostForm.base_fields['subject'].initial = 'Re: %s' % thread.subject
     else:
         category = get_object_or_404(Category, pk = category_id)
     if not category.allowPostThread( request.user ): raise Http404;
@@ -165,6 +164,9 @@ def post(request, group = None, category_id = None):
         postForm = PostForm()
         pollForm = PostPollForm()
 
+    if thread:
+        postForm.fields['subject'] = forms.CharField()
+        postForm.fields['subject'].initial = 'Re: %s' % thread.subject
     context['form'] = postForm
     context['pollform'] = pollForm
     if 'createpoll' in request.REQUEST:
