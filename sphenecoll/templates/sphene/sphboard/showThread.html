@@ -43,28 +43,32 @@
                   {% endfor %}
                 </table>
               {% else %}
-              <form method="POST" action="../../vote/{{ thread.id }}/">
-              {% if request.attributes.voteerror %}
-                <strong class="sphboard error">Error: {{ request.attributes.voteerror }}</strong><br/>
-              {% endif %}
-              {% if post.poll.multiplechoice %}
-                You may select up to {{ post.poll.choices_per_user }} answers:
-                <ul style="list-style: none">
-                  {% for choice in post.poll.choices %}
-                    <li><input type="checkbox" name="pollchoice" value="{{ choice.id }}" id="pollchoice_{{ choice.id }}" /> <label for="pollchoice_{{ choice.id }}">{{ choice.choice }}</label></li>
-                  {% endfor %}
-                  <li><input type="checkbox" name="pollchoice" value="0" id="pollchoice_0" /> <label for="pollchoice_0">Show Results (You won't be able to vote.)</label></li>
-                </ul>
-              {% else %}
-                <ul style="list-style: none">
-                  {% for choice in post.poll.choices %}
-                    <li><input type="radio" name="pollchoice" value="{{ choice.id }}" id="pollchoice_{{ choice.id }}" /> <label for="pollchoice_{{ choice.id }}">{{ choice.choice }}</label></li>
-                  {% endfor %}
-                  <li><input type="radio" name="pollchoice" value="0" id="pollchoice_0" /> <label for="pollchoice_0">Show Results (You won't be able to vote.)</label></li>
-                </ul>
-              {% endif %}
-              <input type="submit" value="Vote" />
-              </form>
+                <form method="POST" action="../../vote/{{ thread.id }}/">
+                {% if request.attributes.voteerror %}
+                  <strong class="sphboard error">Error: {{ request.attributes.voteerror }}</strong><br/>
+                {% endif %}
+                {% if post.poll.multiplechoice %}
+                  You may select up to {{ post.poll.choices_per_user }} answers:
+                  <ul style="list-style: none">
+                    {% for choice in post.poll.choices %}
+                      <li><input type="checkbox" name="pollchoice" value="{{ choice.id }}" id="pollchoice_{{ choice.id }}" /> <label for="pollchoice_{{ choice.id }}">{{ choice.choice }}</label></li>
+                    {% endfor %}
+                    <li><input type="checkbox" name="pollchoice" value="0" id="pollchoice_0" /> <label for="pollchoice_0">Show Results (You won't be able to vote.)</label></li>
+                  </ul>
+                {% else %}
+                  <ul style="list-style: none">
+                    {% for choice in post.poll.choices %}
+                      <li><input type="radio" name="pollchoice" value="{{ choice.id }}" id="pollchoice_{{ choice.id }}" /> <label for="pollchoice_{{ choice.id }}">{{ choice.choice }}</label></li>
+                    {% endfor %}
+                    <li><input type="radio" name="pollchoice" value="0" id="pollchoice_0" /> <label for="pollchoice_0">Show Results (You won't be able to vote.)</label></li>
+                  </ul>
+                {% endif %}
+                {% if user.is_authenticated %}
+                  <input type="submit" value="Vote" />
+                {% else %}
+                  You need to be logged in to vote.
+                {% endif %}
+                </form>
               {% endif %}
             </td>
           </tr>

@@ -47,7 +47,8 @@
         <a href="/accounts/logout/">Logout</a>
       {% else %}
         You are not logged in.<br/>
-        <a href="/accounts/login/?next={{ request.path|urlencode }}">Login</a>
+        <a href="/accounts/login/?next={{ request.path|urlencode }}">Login</a><br/>
+        <a href="/accounts/register/">Register</a><br/>
       {% endif %}
     </div>
   </div>

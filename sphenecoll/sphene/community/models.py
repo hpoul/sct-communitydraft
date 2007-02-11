@@ -10,7 +10,7 @@ class Group(models.Model):
         baseurl = models.CharField(maxlength = 250)
 
         def get_name(self):
-                return longname or name
+                return self.longname or self.name
 
         def recursiveName(self):
                 recname = ''

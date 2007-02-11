@@ -11,7 +11,9 @@ import random
 
 def cryptString( secret, plain ):
     obj = Blowfish.new( secret, Blowfish.MODE_ECB )
-    randstring = open("/dev/urandom").read(12)
+    #randstring = unicode(open("/dev/urandom").read(12), 'ascii', 'ignore')
+    randstring = str.join( '', random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890',12) )
+    print "randstring: %s" % randstring
     split = random.randrange(10)+1
     s = randstring[:split] + ':valid:' + plain + ':valid:' + randstring[split:]
     length = len(s)
@@ -19,7 +21,7 @@ def cryptString( secret, plain ):
     l = length + 8 - ( length % 8 )
     padded = s + " " * ( 8 - length % 8 )
 
-    ciph = obj.encrypt(padded[:1])
+    ciph = obj.encrypt(padded[:l])
     try:
         return b32encode(ciph)
     except NameError:

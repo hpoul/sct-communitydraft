@@ -83,7 +83,8 @@ class Category(models.Model):
                 session[sKey] = val
             self._lastVisit = val['originalLastVisit']
         except CategoryLastVisit.DoesNotExist:
-            self.lastVisit = CategoryLastVisit(user = user, category = self)
+            lastVisit = CategoryLastVisit(user = user, category = self)
+            self._lastVisit = datetime.today()
         lastVisit.lastvisit = datetime.today()
         lastVisit.save()
         return self._lastVisit
@@ -323,7 +324,9 @@ class Poll(models.Model):
         return self.pollchoice_set.all()
 
     def has_voted(self, user = None):
-        return self.pollvoters_set.filter( user = user or self._user ).count() > 0
+        if not user: user = self._user
+        if not user.is_authenticated(): return False
+        return self.pollvoters_set.filter( user = user ).count() > 0
         """try:
             return True
         except PollVoters.DoesNotExist:
