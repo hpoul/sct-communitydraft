@@ -2,7 +2,7 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
 
-defaultdict = { 'groupName': 'Sphene',#SpaceCombat2',
+defaultdict = { 'groupName': 'SpaceCombat2',
                 'urlPrefix': '', }
 
 
