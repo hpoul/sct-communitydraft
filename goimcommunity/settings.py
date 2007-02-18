@@ -61,12 +61,13 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
 #    'sphene.sphboard.middleware.PerformanceMiddleware',
+    'sphene.community.middleware.ThreadLocals',
+    'sphene.community.middleware.GroupMiddleware',
     'sphene.community.middleware.MultiHostMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
-    'sphene.community.middleware.GroupMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -96,7 +97,9 @@ SPH_HOST_MIDDLEWARE_URLCONF_MAPPING = {
 SPH_HOST_MIDDLEWARE_URLCONF_MAP = {
     'community.spacecombat2.net': 'urlconfs.sc2_community',
     'community.spacecombat2.com': 'urlconfs.sc2_community',
-#    '127.0.0.1:8000': 'urlconfs.sc2_community',
+    '127.0.0.1:8000': { 'urlconf': 'urlconfs.sc2_community',
+                        'params': { 'groupName': 'Sphene' }
+                        }
 }
 
 TEMPLATE_DIRS = (
@@ -106,7 +109,7 @@ TEMPLATE_DIRS = (
     ROOT_PATH + '/templates',
     ROOT_PATH + '/../sitetemplates',
 
-    ROOT_PATH + '/../sphenecoll/templates',
+    ROOT_PATH + '/../../communitytools/sphenecoll/templates',
 
 #    '/home/kahless/dev/python/diamandas/myghtyboard/templates',
 #    '/home/kahless/dev/python/diamandas/wiki/templates',
@@ -116,11 +119,11 @@ import sys
 #sys.path.append('/home/kahless/dev/python/diamanda/diamandas/')
 #sys.path.append('/home/kahless/dev/python/diamanda')
 sys.path.append(ROOT_PATH)
-sys.path.append(ROOT_PATH + '/../sphenecoll')
+sys.path.append(ROOT_PATH + '/../../communitytools/sphenecoll')
 sys.path.append(ROOT_PATH + '/../inosit')
-sys.path.append(ROOT_PATH + '/../libs/markdown')
-sys.path.append(ROOT_PATH + '/../libs/custom')
-sys.path.append(ROOT_PATH + '/../libs/common')
+sys.path.append(ROOT_PATH + '/../../communitytools/libs/markdown')
+sys.path.append(ROOT_PATH + '/../../communitytools/libs/custom')
+sys.path.append(ROOT_PATH + '/../../communitytools/libs/common')
 
 
 INSTALLED_APPS = (
