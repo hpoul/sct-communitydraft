@@ -1,12 +1,18 @@
 
 from django.conf import settings
 from django.conf.urls.defaults import *
+from sphene.sphwiki.sitemaps import WikiSnipSitemap
 
 defaultdict = { 'groupName': None, #'SpaceCombat2',
                 'urlPrefix': '', }
 
+sitemaps = {
+    'wiki': WikiSnipSitemap,
+    }
+
 urlpatterns = patterns('',
                        (r'^$', 'django.views.generic.simple.redirect_to', { 'url': '/wiki/show/Start/' }),
+                       (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', { 'sitemaps': sitemaps }),
                        (r'^board/', include('sphene.sphboard.urls'), defaultdict),
                        (r'^wiki/',  include('sphene.sphwiki.urls'), defaultdict),
                        (r'^accounts/login/$', 'django.contrib.auth.views.login'),

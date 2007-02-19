@@ -140,6 +140,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
 
     'django.contrib.admin',
+    'django.contrib.sitemaps',
     
     'goimcommunity.polls',
     'goimcommunity.leaguesystem',
