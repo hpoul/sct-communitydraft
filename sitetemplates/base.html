@@ -4,15 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <link rel="stylesheet" href="/static/style.css" />
-  <title>GOIM Community{% block title %} - Uh Yeah !{% endblock %}</title>
+  <title>{% if group and group.longname %}{{ group.longname }}{% else %}GOIM Community{% block title %} - Uh Yeah !{% endblock %}{% endif %}</title>
   {% block head %}{% endblock %}
+  {% include "_head.html" %}
 </head>
-
 
 <body>
   <div id="top">
     {% block top %}
-      <h1>SpaceCombat 2</h1>
+      <h1>{% if group and group.longname %}{{ group.longname }}{% else %}SpaceCombat 2{% endif %}</h1>
       <h2>Community</h2>
     {% endblock %}
   </div>
@@ -66,5 +66,7 @@ dumdidum
 
 {% endblock %}
   </div>
+
+{% include "_footer.html" %}
 </body>
 </html>

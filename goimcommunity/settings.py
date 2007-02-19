@@ -61,9 +61,11 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
 #    'sphene.sphboard.middleware.PerformanceMiddleware',
+#    'sphene.community.middleware.PsycoMiddleware',
     'sphene.community.middleware.ThreadLocals',
     'sphene.community.middleware.GroupMiddleware',
     'sphene.community.middleware.MultiHostMiddleware',
+    'sphene.community.middleware.StatsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -95,8 +97,11 @@ SPH_HOST_MIDDLEWARE_URLCONF_MAPPING = {
 }
 
 SPH_HOST_MIDDLEWARE_URLCONF_MAP = {
-    'community.spacecombat2.net': 'urlconfs.sc2_community',
-    'community.spacecombat2.com': 'urlconfs.sc2_community',
+    'community.spacecombat2.net': { 'urlconf': 'urlconfs.sc2_community',
+                                    'params' : { 'groupName': 'SpaceCombat2', }, },
+    'community.spacecombat2.com': { 'alias': 'community.spacecombat2.net' },#'urlconfs.sc2_community',
+    'sct.sphene.net': { 'urlconf': 'urlconfs.sc2_community',
+                        'params': { 'groupName': 'sct' } },
     '127.0.0.1:8000': { 'urlconf': 'urlconfs.sc2_community',
                         'params': { 'groupName': 'Sphene' }
                         }
