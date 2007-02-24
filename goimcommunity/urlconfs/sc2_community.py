@@ -2,12 +2,14 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
 from sphene.sphwiki.sitemaps import WikiSnipSitemap
+from sphene.sphboard.sitemaps import ThreadsSitemap
 
 defaultdict = { 'groupName': None, #'SpaceCombat2',
                 'urlPrefix': '', }
 
 sitemaps = {
     'wiki': WikiSnipSitemap,
+    'board': ThreadsSitemap,
     }
 
 urlpatterns = patterns('',

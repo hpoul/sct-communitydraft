@@ -51,6 +51,11 @@
         <a href="/accounts/register/">Register</a><br/>
       {% endif %}
     </div>
+    {% if sph.toc %}
+      <div id="toc">
+        {{ sph.toc }}
+      </div>
+    {% endif %}
   </div>
   <div id="content">
 {% if messages %}

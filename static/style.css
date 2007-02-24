@@ -47,10 +47,12 @@ div#leftblah {
 }
 div#navigation,
 div#subnavigation,
-div#userblock {
+div#userblock,
+div#toc {
         margin-top: 20px;
 }
-div#userblock {
+div#userblock,
+div#toc {
 	background-color: #eee;
 	border: 1px solid gray;
 	padding: 5px;
@@ -86,6 +88,12 @@ div#content {
 	margin-left: 240px;
 }
 
+div#toc h2 {
+        font-size: 1em;
+}
+div#toc ul {
+        padding-left: 10px;
+}
 
 
 
