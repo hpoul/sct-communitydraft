@@ -65,11 +65,12 @@ MIDDLEWARE_CLASSES = (
     'sphene.community.middleware.ThreadLocals',
     'sphene.community.middleware.GroupMiddleware',
     'sphene.community.middleware.MultiHostMiddleware',
-    'sphene.community.middleware.StatsMiddleware',
+#    'sphene.community.middleware.StatsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
+    'sphene.community.middleware.PermissionDeniedMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
