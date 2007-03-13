@@ -51,6 +51,9 @@ div#userblock,
 div#toc {
         margin-top: 20px;
 }
+div#toc {
+	overflow: hidden;
+}
 div#userblock,
 div#toc {
 	background-color: #eee;
@@ -75,6 +78,7 @@ div#navigation a {
 	background-color: #eee;
 	color: #000;
 	padding-left: 10px;
+	width: 185px;
 }
 div#navigation a:hover {
         background-color: #ddd;
@@ -93,6 +97,10 @@ div#toc h2 {
 }
 div#toc ul {
         padding-left: 10px;
+	margin-left: 0px;
+}
+div#toc li {
+	padding-left: 0px;
 }
 
 
@@ -112,4 +120,24 @@ ul.news .comments {
 .error, .errorlist {
         color: red;
         font-weight: bold;
+}
+
+
+.wiki_title {
+	font-size: 2em;
+	background-color: #ddddee;
+	padding: 5px;
+	padding-left: 30px;
+}
+
+.sphwiki_body h1 {
+	font-size: 1.5em;
+	background-color: #e0e0f5;
+	padding: 3px;
+}
+
+.sphwiki_body h2 {
+}
+
+.sphwiki_body h3 {
 }

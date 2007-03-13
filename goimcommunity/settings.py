@@ -103,6 +103,8 @@ SPH_HOST_MIDDLEWARE_URLCONF_MAP = {
     'community.spacecombat2.com': { 'alias': 'community.spacecombat2.net' },#'urlconfs.sc2_community',
     'sct.sphene.net': { 'urlconf': 'urlconfs.sc2_community',
                         'params': { 'groupName': 'sct' } },
+    'chs.sphene.net': { 'urlconf': 'urlconfs.sc2_community',
+                        'params': { 'groupName': 'chs' } },
     '127.0.0.1:8000': { 'urlconf': 'urlconfs.sc2_community',
                         'params': { 'groupName': 'Sphene' }
                         }
