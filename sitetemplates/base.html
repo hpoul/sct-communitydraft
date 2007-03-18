@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <link rel="stylesheet" href="/static/style.css" />
-  <title>{% if group and group.longname %}{{ group.longname }}{% else %}GOIM Community{% endif %}</title>
+  <title>{% if group and group.longname %}{{ group.longname }}{% else %}GOIM Community{% endif %}{% if sph.subtitle %} | {{ sph.subtitle }}{% endif %}</title>
   {% block head %}{% endblock %}
   {% include "_head.html" %}
 </head>
@@ -57,6 +57,11 @@
       </div>
     {% endif %}
     <br/><br/>
+
+    <!-- AddThis Bookmark Button BEGIN -->
+    <a href="http://www.addthis.com/bookmark.php" onclick="window.open('http://www.addthis.com/bookmark.php?pub=kahless&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title), 'addthis', 'scrollbars=yes,menubar=no,width=620,height=520,resizable=yes,toolbar=no,location=no,status=no,screenX=200,screenY=100,left=200,top=100'); return false;" title="Bookmark using any bookmark manager!" target="_blank"><img src="http://s3.addthis.com/button1-bm.gif" width="125" height="16" border="0" alt="AddThis Social Bookmark Button" /></a>
+    <!-- AddThis Bookmark Button END --><br/><br/>
+    
     <a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/badges/djangosite80x15_grey.gif" border="0" alt="A Django site." title="A Django site." /></a>
   </div>
   <div id="content">
