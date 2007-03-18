@@ -20,14 +20,8 @@ urlpatterns = patterns('',
     # Uncomment this for admin:
                        (r'^admin/', include('django.contrib.admin.urls')),
 
-                       (r'^polls/', include('goimcommunity.polls.urls')),
-		       (r'^league/', include('goimcommunity.leaguesystem.urls')),
-
                        (r'^board/', include('sphene.sphboard.urls')),
-                       (r'^rewrite/(?P<groupName>\w+)/board/', include('sphene.sphboard.urls'), {'urlPrefix': '' }),
-                       (r'^rewrite/(?P<groupName>\w+)/wiki/',  include('sphene.sphwiki.urls'), {'urlPrefix': '' }),
-		       (r'^rewrite/\w+/accounts/login/$', 'django.contrib.auth.views.login'),
-		       (r'^rewrite/\w+/accounts/logout/$', 'django.contrib.auth.views.logout' ),
+                       
                        (r'^(?P<urlPrefix>test/(?P<groupName>\w+))/board/', include('sphene.sphboard.urls')),
                        (r'^(?P<urlPrefix>test/(?P<groupName>\w+))/wiki/',  include('sphene.sphwiki.urls')),
 
