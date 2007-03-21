@@ -21,6 +21,9 @@ DATABASE_PASSWORD = 'test'         # Not used with sqlite3.
 DATABASE_HOST = '127.0.0.1'             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
+SPH_SETTINGS = { 'wiki_rss_url' : '/feeds/wiki/',
+                 }
+
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
 TIME_ZONE = 'Europe/Vienna'
@@ -145,8 +148,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.sitemaps',
     
-    'goimcommunity.polls',
-    'goimcommunity.leaguesystem',
+    #'goimcommunity.polls',
+    #'goimcommunity.leaguesystem',
     
     'sphene.community',
     'sphene.sphboard',

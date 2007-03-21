@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls.defaults import *
 from sphene.sphwiki.sitemaps import WikiSnipSitemap
 from sphene.sphboard.sitemaps import ThreadsSitemap
+from sphene.sphwiki.feeds import LatestWikiChanges
 
 defaultdict = { 'groupName': None, #'SpaceCombat2',
                 'urlPrefix': '', }
@@ -12,9 +13,14 @@ sitemaps = {
     'board': ThreadsSitemap,
     }
 
+feeds = {
+    'wiki': LatestWikiChanges,
+    }
+
 urlpatterns = patterns('',
                        (r'^$', 'django.views.generic.simple.redirect_to', { 'url': '/wiki/show/Start/' }),
                        (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', { 'sitemaps': sitemaps }),
+                       (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
                        (r'^board/', include('sphene.sphboard.urls'), defaultdict),
                        (r'^wiki/',  include('sphene.sphwiki.urls'), defaultdict),
                        (r'^accounts/login/$', 'django.contrib.auth.views.login'),
