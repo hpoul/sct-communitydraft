@@ -141,3 +141,21 @@ ul.news .comments {
 
 .sphwiki_body h3 {
 }
+
+
+.memberquote {
+  margin-left: 1em;
+  font-size: smaller;
+}
+
+blockquote {
+  border-left: 5px solid #ccc;
+  margin-left: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 5px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  min-height: 2em;
+}
+
