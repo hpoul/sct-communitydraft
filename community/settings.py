@@ -91,7 +91,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 
-ROOT_URLCONF = 'goimcommunity.urls'
+ROOT_URLCONF = 'community.urls'
 
 SPH_HOST_MIDDLEWARE_URLCONF_MAPPING = {
     'community.spacecombat2.net': { 'groupName': 'SpaceCombat2' },
@@ -100,17 +100,10 @@ SPH_HOST_MIDDLEWARE_URLCONF_MAPPING = {
 }
 
 SPH_HOST_MIDDLEWARE_URLCONF_MAP = {
-    'community.spacecombat2.net': { 'urlconf': 'urlconfs.sc2_community',
-                                    'params' : { 'groupName': 'SpaceCombat2', }, },
-    'community.spacecombat2.com': { 'alias': 'community.spacecombat2.net' },#'urlconfs.sc2_community',
-    'sct.sphene.net': { 'urlconf': 'urlconfs.sc2_community',
-                        'params': { 'groupName': 'sct' } },
-    'chs.sphene.net': { 'urlconf': 'urlconfs.sc2_community',
-                        'params': { 'groupName': 'chs' } },
-    '127.0.0.1:8000': { 'urlconf': 'urlconfs.sc2_community',
-                        'params': { 'groupName': 'sphene' }
+    '127.0.0.1:8000': { 'urlconf': 'urlconfs.community_urls',
+                        'params': { 'groupName': 'example' }
                         },
-    r'^(?P<groupName>\w+).localhost.*$': { 'urlconf': 'urlconfs.sc2_community', },
+    r'^(?P<groupName>\w+).localhost.*$': { 'urlconf': 'urlconfs.community_urls', },
 }
 
 TEMPLATE_DIRS = (
@@ -127,7 +120,6 @@ TEMPLATE_DIRS = (
 import sys
 sys.path.append(ROOT_PATH)
 sys.path.append(ROOT_PATH + '/../../communitytools/sphenecoll')
-sys.path.append(ROOT_PATH + '/../inosit')
 sys.path.append(ROOT_PATH + '/../../communitytools/libs/markdown')
 sys.path.append(ROOT_PATH + '/../../communitytools/libs/custom')
 sys.path.append(ROOT_PATH + '/../../communitytools/libs/common')
@@ -149,10 +141,11 @@ INSTALLED_APPS = (
     'sphene.sphboard',
     'sphene.sphwiki',
 
-    'inosit.tracker',
-
 )
 
+try:
+    # settings_local overwrites a few settings from here, and has to define SECRET_KEY
+    from settings_local import *
+except:
+    print "Warning - Unable to import settings_local"
 
-# settings_local overwrites a few settings from here, and has to define SECRET_KEY
-from settings_local import *
