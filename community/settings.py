@@ -13,8 +13,7 @@ TEMPLATE_DEBUG = True
 # The following settings should be customized in settings_local.py !!!
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
-    ('Herbert Poul', 'herbert.poul@gmail.com'),
+    ('Your Name', 'your_email@domain.com'),
 )
 
 MANAGERS = ADMINS
