@@ -159,3 +159,11 @@ blockquote {
   min-height: 2em;
 }
 
+pre code, .code {
+	background-color:#eee;
+	display:block;
+	padding: 5px;
+	border: 1px dotted black;
+	overflow: scroll;
+}
+
