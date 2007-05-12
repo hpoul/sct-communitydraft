@@ -5,6 +5,9 @@
 
 import os
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+# SCT library path.
+LIB_PATH = os.path.join(ROOT_PATH,'..','..','communitytools', 'sphenecoll')
+
 from django.conf.urls.defaults import *
 
 DEBUG = True
@@ -46,7 +49,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ROOT_PATH + '/../static/'
+MEDIA_ROOT = os.path.join(ROOT_PATH,'..','static')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
@@ -109,19 +112,16 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    ROOT_PATH + '/templates',
-    ROOT_PATH + '/../sitetemplates',
+    os.path.join(ROOT_PATH, 'templates'),
+    os.path.join(ROOT_PATH, '..', 'sitetemplates'),
 
-    ROOT_PATH + '/../../communitytools/sphenecoll/templates',
+    os.path.join(LIB_PATH, 'templates'),
 
 )
 
 import sys
 sys.path.append(ROOT_PATH)
-sys.path.append(ROOT_PATH + '/../../communitytools/sphenecoll')
-sys.path.append(ROOT_PATH + '/../../communitytools/libs/markdown')
-sys.path.append(ROOT_PATH + '/../../communitytools/libs/custom')
-sys.path.append(ROOT_PATH + '/../../communitytools/libs/common')
+sys.path.append(LIB_PATH)
 
 
 
