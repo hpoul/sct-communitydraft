@@ -77,6 +77,7 @@ MIDDLEWARE_CLASSES = (
     'sphene.community.middleware.GroupMiddleware',
     'sphene.community.middleware.MultiHostMiddleware',
 #    'sphene.community.middleware.StatsMiddleware',
+    'sphene.community.middleware.LastModified',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
