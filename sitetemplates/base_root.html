@@ -1,6 +1,6 @@
 {% load sphboard_extras %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <link rel="stylesheet" href="/static/style.css" />
@@ -60,6 +60,9 @@
 
     {% include "_below_navigation.html" %}
   </div>
+  {% block precontent %}
+    
+  {% endblock %}
   <div id="content">
 {% if messages %}
   <ul class="messages">
@@ -70,11 +73,14 @@
 {% endif %}
 {% block content %}
 
-dumdidum
+
 
 {% endblock %}
   </div>
 
+{% block footer %}
+
+{% endblock %}
 {% include "_footer.html" %}
 </body>
 </html>
