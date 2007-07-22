@@ -1,4 +1,4 @@
-{% load sphboard_extras %}
+{% load sph_extras %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -43,12 +43,13 @@
     {% endif %}
     <div id="userblock">
       {% if user.is_authenticated %}
-        You are logged in as {% sphboard_displayUserName user %}<br/>
-        <a href="/accounts/logout/">Logout</a>
+        You are logged in as {% sph_html_user user %}<br/>
+        <a href="{% sph_url 'sphene.community.views.profile_edit_mine' %}">Edit Profile</a><br/><br/>
+        <a href="{% sph_url 'sphene.community.views.accounts_logout' %}">Logout</a>
       {% else %}
         You are not logged in.<br/>
-        <a href="/accounts/login/?next={{ request.path|urlencode }}">Login</a><br/>
-        <a href="/accounts/register/">Register</a><br/>
+        <a href="{% sph_url 'sphene.community.views.accounts_login' %}{% if not sph.is_logout %}?next={{ request.path|urlencode }}{% endif %}">Login</a><br/>
+        <a href="{% sph_url 'sphene.community.views.register' %}">Register</a><br/>
       {% endif %}
     </div>
     {% if sph.toc %}

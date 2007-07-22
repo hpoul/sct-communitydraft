@@ -120,6 +120,8 @@ TEMPLATE_DIRS = (
 
 )
 
+LOGIN_REDIRECT_URL = '/'
+
 import sys
 sys.path.append(ROOT_PATH)
 sys.path.append(LIB_PATH)
