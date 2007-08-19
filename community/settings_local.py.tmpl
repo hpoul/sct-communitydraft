@@ -17,3 +17,11 @@ SECRET_KEY = 'Make me unique'
 
 CACHE_BACKEND = 'locmem:///'
 
+
+SPH_SETTINGS = { }
+
+# The workaround_select_related_bug is currently required in django trunk.
+# See http://code.djangoproject.com/ticket/4789 (If this patch was committed,
+# or you applied the patch manually you can disable this workaround to improve
+# performance)
+SPH_SETTINGS['workaround_select_related_bug'] = True
