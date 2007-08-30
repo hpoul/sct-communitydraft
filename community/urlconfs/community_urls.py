@@ -4,6 +4,7 @@ from django.conf.urls.defaults import *
 from sphene.sphwiki.sitemaps import WikiSnipSitemap
 from sphene.sphboard.sitemaps import ThreadsSitemap
 from sphene.sphwiki.feeds import LatestWikiChanges
+from sphene.sphwiki import urls as sphwiki_urls
 
 defaultdict = { 'groupName': None,
                 'urlPrefix': '', }
