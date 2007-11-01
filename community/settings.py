@@ -97,12 +97,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 ROOT_URLCONF = 'community.urls'
 
-SPH_HOST_MIDDLEWARE_URLCONF_MAPPING = {
-    'community.spacecombat2.net': { 'groupName': 'SpaceCombat2' },
-    'community.spacecombat2.com': { 'groupName': 'SpaceCombat2' },
-    '127.0.0.1:8000': { 'groupName': 'SpaceCombat2' },
-}
-
 SPH_HOST_MIDDLEWARE_URLCONF_MAP = {
     '127.0.0.1:8000': { 'urlconf': 'urlconfs.community_urls',
                         'params': { 'groupName': 'example' }
