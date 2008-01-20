@@ -7,6 +7,7 @@ import os
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 # SCT library path.
 LIB_PATH = os.path.join(ROOT_PATH,'..','..','communitytools', 'sphenecoll')
+print "ROOT_PATH: %s / LIB_PATH: %s" % (str(ROOT_PATH),str(LIB_PATH))
 
 from django.conf.urls.defaults import *
 
@@ -137,6 +138,7 @@ INSTALLED_APPS = (
     'sphene.community',
     'sphene.sphboard',
     'sphene.sphwiki',
+    'sphene.sphblog',
 
 )
 

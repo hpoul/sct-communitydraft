@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.conf.urls.defaults import *
 from sphene.sphwiki.sitemaps import WikiSnipSitemap
@@ -25,6 +24,7 @@ urlpatterns = patterns('',
                        (r'^community/', include('sphene.community.urls'), defaultdict),
                        (r'^board/', include('sphene.sphboard.urls'), defaultdict),
                        (r'^wiki/',  include('sphene.sphwiki.urls'), defaultdict),
+                       (r'^blog/',  include('sphene.sphblog.urls'), defaultdict),
                        (r'^accounts/login/$', 'django.contrib.auth.views.login'),
                        (r'^accounts/logout/$', 'django.contrib.auth.views.logout' ),
                        (r'^accounts/register/$', 'sphene.community.views.register', defaultdict),
