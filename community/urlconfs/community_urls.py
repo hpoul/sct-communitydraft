@@ -18,7 +18,8 @@ feeds = {
     }
 
 urlpatterns = patterns('',
-                       (r'^$', 'django.views.generic.simple.redirect_to', { 'url': '/wiki/show/Start/' }),
+                       #(r'^$', 'django.views.generic.simple.redirect_to', { 'url': '/wiki/show/Start/' }),
+                       (r'^$', 'sphene.community.views.groupaware_redirect_to', { 'url': '/wiki/show/Start/', 'groupName': None }),
                        (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', { 'sitemaps': sitemaps }),
                        (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
                        (r'^community/', include('sphene.community.urls'), defaultdict),
