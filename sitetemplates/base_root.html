@@ -9,7 +9,25 @@
   {% for jsinclude in sph_settings.community_jsincludes %}
     <script type="text/javascript" src="{{ jsinclude }}"></script>
   {% endfor %}
-  <title>{% if group and group.longname %}{{ group.longname }}{% else %}SCT{% endif %}{% if sph.subtitle %} | {{ sph.subtitle }}{% endif %}</title>
+  <title>{% block title %}{% spaceless %}
+    {% if group %}
+      {% if group.longname %}
+        {{ group.longname }}
+      {% else %}
+        {{ group.name }}
+      {% endif %}
+    {% else %}
+      SCT
+    {% endif %} | 
+    {% block subtitle %}
+      {% if sph.subtitle %}
+        {{ sph.subtitle }}
+      {% else %}
+        {{ group.name }}
+      {% endif %}
+    {% endblock %}
+  {% endspaceless %}{% endblock %}</title>
+
   {% block head %}{% endblock %}
   {% include "_head.html" %}
 </head>
