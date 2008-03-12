@@ -28,8 +28,8 @@ urlpatterns = patterns('',
                        (r'^blog/',  include('sphene.sphblog.urls'), defaultdict),
                        (r'^accounts/login/$', 'django.contrib.auth.views.login'),
                        (r'^accounts/logout/$', 'django.contrib.auth.views.logout' ),
-                       (r'^accounts/register/$', 'sphene.community.views.register', defaultdict),
-                       (r'^accounts/register/(?P<emailHash>[a-zA-Z/\+0-9=]+)/$', 'sphene.community.views.register_hash', defaultdict),
+                       #(r'^accounts/register/$', 'sphene.community.views.register', defaultdict),
+                       #(r'^accounts/register/(?P<emailHash>[a-zA-Z/\+0-9=]+)/$', 'sphene.community.views.register_hash', defaultdict),
 
                        (r'^admin/', include('django.contrib.admin.urls')),
                        ## for development only ...
