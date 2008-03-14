@@ -1,4 +1,5 @@
 {% load sph_extras %}
+{% load i18n %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -68,13 +69,32 @@
     {% endif %}
     <div id="userblock">
       {% if user.is_authenticated %}
+      <p>
         You are logged in as {% sph_html_user user %}<br/>
         <a href="{% sph_url 'sphene.community.views.profile_edit_mine' %}">Edit Profile</a><br/><br/>
         <a href="{% sph_url 'sphene.community.views.accounts_logout' %}">Logout</a>
       {% else %}
-        You are not logged in.<br/>
+        {% trans "You are not logged in." %}<br/>
         <a href="{% sph_url 'sphene.community.views.accounts_login' %}{% if not sph.is_logout %}?next={{ request.path|urlencode }}{% endif %}">Login</a><br/>
         <a href="{% sph_url 'sphene.community.views.register' %}">Register</a><br/>
+      {% endif %}
+      </p>
+      {% if sph_settings.community_show_languageswitcher %}
+      <div class="languageswitcher">
+      <form action="{% sph_url2 django.views.i18n.set_language %}" method="post">
+	<!--p class="languageswitcher_link">
+	  <a href="#" onclick="javascript:$('.languageswitcher_link').hide(); $('.languageswitcher_form').show(); return false;">{% trans "Change Language" %}</a>
+	</p-->
+	<p class="languageswitcher_form" >
+	  <input name="next" type="hidden" value="{{ request.path }}" />
+	  {% trans "Change Language" %}: <select name="language" onchange="this.form.submit()">
+	    {% for lang in LANGUAGES %}
+	    <option value="{{ lang.0 }}"{% ifequal LANGUAGE_CODE lang.0 %} selected="selected"{% endifequal %}>{{ lang.1 }}</option>
+	    {% endfor %}
+	  </select>
+	</p>
+      </form>
+      </div>
       {% endif %}
     </div>
     {% if sph_perms.community_manage_roles %}

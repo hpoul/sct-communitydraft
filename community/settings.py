@@ -33,6 +33,8 @@ DATABASE_PORT = ''             # Set to empty string for default. Not used with 
 SPH_SETTINGS = { 'wiki_rss_url' : '/feeds/wiki/',
                  }
 
+SPH_SETTINGS['community_show_languageswitcher'] = True
+
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
 TIME_ZONE = 'Europe/Vienna'
@@ -41,6 +43,11 @@ TIME_ZONE = 'Europe/Vienna'
 # http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
 # http://blogs.law.harvard.edu/tech/stories/storyReader$15
 LANGUAGE_CODE = 'en-us'
+LANGUAGES = (
+    ('de', 'German'),
+    ('en', 'English'),
+    ('pl', 'Polish'),
+)
 
 SITE_ID = 1
 
@@ -114,7 +121,6 @@ TEMPLATE_DIRS = (
     os.path.join(ROOT_PATH, 'templates'),
     os.path.join(ROOT_PATH, '..', 'sitetemplates'),
 
-    os.path.join(LIB_PATH, 'templates'),
 
 )
 

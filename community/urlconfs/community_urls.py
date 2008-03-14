@@ -35,4 +35,6 @@ urlpatterns = patterns('',
                        ## for development only ...
                        (r'^static/sphene/(.*)$', 'django.views.static.serve', {'document_root': settings.ROOT_PATH + '/../../communitytools/static/sphene' }),
                        (r'^static/(.*)$', 'django.views.static.serve', {'document_root': settings.ROOT_PATH + '/../static' }),
+
+                       (r'^i18n/', include('django.conf.urls.i18n')),
                        )

@@ -166,4 +166,10 @@ pre code, .code {
 	border: 1px dotted black;
 	overflow: scroll;
 }
-
+div.languageswitcher, div.languageswitcher select  {
+  font-size: xx-small;
+}
+div.languageswitcher select {
+  border: 1px solid gray;
+  background: inherit;
+}
