@@ -10,6 +10,9 @@
   {% for jsinclude in sph_settings.community_jsincludes %}
     <script type="text/javascript" src="{{ jsinclude }}"></script>
   {% endfor %}
+  {% for styleinclude in sph_settings.community_styleincludes %}
+    <link rel="stylesheet" href="{{ styleinclude }}" />
+  {% endfor %}
   <title>{% block title %}{% spaceless %}
     {% if group %}
       {% if group.longname %}
