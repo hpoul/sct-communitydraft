@@ -7,7 +7,6 @@ import os
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 # SCT library path.
 LIB_PATH = os.path.join(ROOT_PATH,'..','..','communitytools', 'sphenecoll')
-print "ROOT_PATH: %s / LIB_PATH: %s" % (str(ROOT_PATH),str(LIB_PATH))
 
 from django.conf.urls.defaults import *
 
@@ -47,6 +46,7 @@ LANGUAGES = (
     ('de', 'German'),
     ('en', 'English'),
     ('pl', 'Polish'),
+    ('ko', 'Korean'),
 )
 
 SITE_ID = 1
