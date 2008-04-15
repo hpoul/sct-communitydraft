@@ -101,9 +101,10 @@
       {% endif %}
     </div>
     {% if sph_perms.community_manage_roles %}
-    <p>
-      <a href="{% sph_url 'community_admin_permission_role_list' %}">{% trans "Manage Roles" %}</a>
-    </p>
+    <ul>
+      <li><a href="{% sph_url 'community_admin_permission_role_list' %}">{% trans "Manage Roles" %}</a></li>
+      <li><a href="{% sph_url 'community_admin_permission_rolegroup_list' %}">{% trans "Manage Role Groups" %}</a></li>
+    </ul>
     {% endif %}
     {% if sph.toc %}
       <div id="toc">
