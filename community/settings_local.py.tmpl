@@ -25,3 +25,11 @@ SPH_SETTINGS = { }
 # or you applied the patch manually you can disable this workaround to improve
 # performance)
 SPH_SETTINGS['workaround_select_related_bug'] = True
+
+
+# You can configure this to make every subdomain refer to it's own community 'Group'
+SPH_HOST_MIDDLEWARE_URLCONF_MAP = {
+    r'^(?P<groupName>\w+).localhost.*$': { 'urlconf': 'urlconfs.community_urls', },
+    '.*': { 'urlconf': 'urlconfs.community_urls',
+            'params': { 'groupName': 'example' } },
+}
