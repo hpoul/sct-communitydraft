@@ -39,7 +39,7 @@ msgstr "Connexion"
 
 #: .\sitetemplates\base_root.html.py:82
 msgid "Register"
-msgstr "Enregistrez-vous"
+msgstr "S'enregistrer"
 
 #: .\sitetemplates\base_root.html.py:89 .\sitetemplates\base_root.html.py:93
 msgid "Change Language"
