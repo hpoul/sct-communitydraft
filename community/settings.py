@@ -45,6 +45,7 @@ LANGUAGE_CODE = 'en-us'
 LANGUAGES = (
     ('de', 'German'),
     ('en', 'English'),
+    ('fr', 'French'),
     ('pl', 'Polish'),
     ('ko', 'Korean'),
 )
