@@ -13,12 +13,19 @@ sitemaps = {
     'wiki': Wiki,
 }
 """
+
+# newforms admin magic
+
+from django.contrib import admin
+admin.autodiscover()
+
+
 urlpatterns = patterns('',
     # Example:
     # (r'^goimcommunity/', include('goimcommunity.apps.foo.urls.foo')),
 
     # Uncomment this for admin:
-                       (r'^admin/', include('django.contrib.admin.urls')),
+                       (r'^admin/(.*)', admin.site.root),
 
                        (r'^board/', include('sphene.sphboard.urls')),
                        
