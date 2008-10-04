@@ -151,6 +151,8 @@ INSTALLED_APPS = (
 
 )
 
+DJAPIAN_DATABASE_PATH = '/var/cache/sct'
+
 try:
     # settings_local overwrites a few settings from here, and has to define SECRET_KEY
     from settings_local import *
