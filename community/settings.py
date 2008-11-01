@@ -34,6 +34,10 @@ SPH_SETTINGS = { 'wiki_rss_url' : '/feeds/wiki/',
 
 SPH_SETTINGS['community_show_languageswitcher'] = True
 
+# Customize wikilink regex - by default CamelCase would be replaced..
+# with this regex only words within [brackets] are replaced.
+SPH_SETTINGS['wikilink_regexp'] = r'''((?P<urls><a .*?>.*?</a)|(?P<escape>\\|\b)?(?P<wholeexpression>(\[(?P<snipname>[A-Za-z\-_/0-9]+)(\|(?P<sniplabel>.+?))?\])))'''
+
 # Local time zone for this installation. All choices can be found here:
 # http://www.postgresql.org/docs/current/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
 TIME_ZONE = 'Europe/Vienna'
