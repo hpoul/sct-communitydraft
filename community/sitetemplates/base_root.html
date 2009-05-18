@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="{{ styleinclude }}" />
   {% endfor %}
   <title>{% block title %}{% spaceless %}
+    {% block subtitle %}
+      {% if sph.subtitle %}
+        {{ sph.subtitle }}
+      {% else %}
+        {{ group.name }}
+      {% endif %}
+    {% endblock %} |
     {% if group %}
       {% if group.longname %}
         {{ group.longname }}
@@ -22,14 +29,7 @@
       {% endif %}
     {% else %}
       SCT
-    {% endif %} | 
-    {% block subtitle %}
-      {% if sph.subtitle %}
-        {{ sph.subtitle }}
-      {% else %}
-        {{ group.name }}
-      {% endif %}
-    {% endblock %}
+    {% endif %}
   {% endspaceless %}{% endblock %}</title>
 
   {% block head %}{% endblock %}
