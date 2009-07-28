@@ -52,6 +52,7 @@ LANGUAGES = (
     ('fr', 'French'),
     ('pl', 'Polish'),
     ('ko', 'Korean'),
+    ('ru', 'Russian'),
 )
 
 SITE_ID = 1
