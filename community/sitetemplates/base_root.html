@@ -7,11 +7,13 @@
   {% block stylesheets %}
   <link rel="stylesheet" href="/static/style.css" />
   {% endblock %}
-  {% for jsinclude in sph_settings.community_jsincludes %}
-    <script type="text/javascript" src="{{ jsinclude }}"></script>
-  {% endfor %}
   {% for styleinclude in sph_settings.community_styleincludes %}
     <link rel="stylesheet" href="{{ styleinclude }}" />
+  {% endfor %}
+  {% block head %}{% endblock %}
+  {% include "_head.html" %}
+  {% for jsinclude in sph_settings.community_jsincludes %}
+    <script type="text/javascript" src="{{ jsinclude }}"></script>
   {% endfor %}
   <title>{% block title %}{% spaceless %}
     {% block subtitle %}
@@ -32,8 +34,6 @@
     {% endif %}
   {% endspaceless %}{% endblock %}</title>
 
-  {% block head %}{% endblock %}
-  {% include "_head.html" %}
 </head>
 
 <body>
