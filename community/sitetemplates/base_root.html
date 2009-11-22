@@ -12,9 +12,11 @@
   {% endfor %}
   {% block head %}{% endblock %}
   {% include "_head.html" %}
-  {% for jsinclude in sph_settings.community_jsincludes %}
-    <script type="text/javascript" src="{{ jsinclude }}"></script>
-  {% endfor %}
+  {% block jsincludes %}
+    {% for jsinclude in sph_settings.community_jsincludes %}
+      <script type="text/javascript" src="{{ jsinclude }}"></script>
+    {% endfor %}
+  {% endblock %}
   <title>{% block title %}{% spaceless %}
     {% block subtitle %}
       {% if sph.subtitle %}
