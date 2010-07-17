@@ -38,7 +38,7 @@ urlpatterns = patterns('',
                        #(r'^accounts/register/$', 'sphene.community.views.register', defaultdict),
                        #(r'^accounts/register/(?P<emailHash>[a-zA-Z/\+0-9=]+)/$', 'sphene.community.views.register_hash', defaultdict),
 
-                       (r'^admin/(.*)', admin.site.root),
+                       (r'^admin/', include(admin.site.urls)),
                        ## for development only ...
                        (r'^static/sphene/(.*)$', 'django.views.static.serve', {'document_root': settings.ROOT_PATH + '/../../communitytools/static/sphene' }),
                        (r'^static/(.*)$', 'django.views.static.serve', {'document_root': settings.ROOT_PATH + '/../static' }),
