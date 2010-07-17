@@ -76,8 +76,8 @@
       </div>
     {% endif %}
     <div id="userblock">
-      {% if user.is_authenticated %}
       <p>
+      {% if user.is_authenticated %}
         {% blocktrans with user|sph_html_user as user %}You are logged in as {{ user }}{% endblocktrans %}<br/>
         <a href="{% sph_url 'sphene.community.views.profile_edit_mine' %}">{% trans "Edit Profile" %}</a><br/><br/>
         <a href="{% sph_url 'sphene.community.views.accounts_logout' %}">{% trans "Logout" %}</a>
