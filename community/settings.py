@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
 
     'django.contrib.admin',
+    'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     
     'sphene.community',
