@@ -108,6 +108,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     'django.core.context_processors.request',
     'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
     'sphene.community.context_processors.navigation',
 )
 
@@ -146,6 +147,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.humanize',
     'django.contrib.flatpages',
+
+    'django.contrib.messages',
 
     'django.contrib.admin',
     'django.contrib.sitemaps',
