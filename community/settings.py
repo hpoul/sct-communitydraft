@@ -95,6 +95,7 @@ MIDDLEWARE_CLASSES = (
     'sphene.community.middleware.LastModified',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.doc.XViewMiddleware',
@@ -147,10 +148,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.humanize',
     'django.contrib.flatpages',
+    'django.contrib.messages',
 
     'django.contrib.messages',
 
     'django.contrib.admin',
+    'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     
     'sphene.community',
