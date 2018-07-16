@@ -6,9 +6,9 @@
 import os
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 # SCT library path.
-LIB_PATH = os.path.join(ROOT_PATH, '..', '..', 'communitytools', 'sphenecoll')
+LIB_PATH = os.path.join(ROOT_PATH, '..', '..', 'sct-communitytools', 'sphenecoll')
 
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -61,13 +61,19 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
+STATIC_ROOT = os.path.join(ROOT_PATH, '..', 'collectedstatic')
+
+STATICFILES_DIRS = [
+    os.path.join(ROOT_PATH, '..', 'static'),
+]
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(ROOT_PATH, '..', 'static')
+MEDIA_ROOT = os.path.join(ROOT_PATH, '..', 'media')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
-MEDIA_URL = '/static/'
+MEDIA_URL = '/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -85,7 +91,34 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
-MIDDLEWARE_CLASSES = (
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(ROOT_PATH, 'templates'),
+            os.path.join(ROOT_PATH, 'sitetemplates'),
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.static',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.request',
+                'django.template.context_processors.media',
+                'django.contrib.messages.context_processors.messages',
+                'sphene.community.context_processors.navigation',
+            ],
+            'loaders': [
+                'sphene.community.groupaware_templateloader.GroupAwareTemplateLoader',
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ]
+        },
+    }
+]
+
+MIDDLEWARE = [
 #    'sphene.sphboard.middleware.PerformanceMiddleware',
 #    'sphene.community.middleware.PsycoMiddleware',
     'sphene.community.middleware.ThreadLocals',
@@ -98,9 +131,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.doc.XViewMiddleware',
+    'django.contrib.admindocs.middleware.XViewMiddleware',
     'sphene.community.middleware.PermissionDeniedMiddleware',
-)
+]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
@@ -150,14 +183,13 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'django.contrib.messages',
 
-    'django.contrib.messages',
-
     'django.contrib.admin',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     
     'sphene.community',
     'sphene.sphboard',
+    'sphene.sphquestions',
     'sphene.sphwiki',
     'sphene.sphblog',
 
