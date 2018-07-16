@@ -6,7 +6,7 @@
 import os
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 # SCT library path.
-LIB_PATH = os.path.join(ROOT_PATH,'..','..','communitytools', 'sphenecoll')
+LIB_PATH = os.path.join(ROOT_PATH, '..', '..', 'communitytools', 'sphenecoll')
 
 from django.conf.urls.defaults import *
 
@@ -29,7 +29,7 @@ DATABASE_PASSWORD = 'test'         # Not used with sqlite3.
 DATABASE_HOST = '127.0.0.1'             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
-SPH_SETTINGS = { 'wiki_rss_url' : '/feeds/wiki/',
+SPH_SETTINGS = { 'wiki_rss_url': '/feeds/wiki/',
                  }
 
 SPH_SETTINGS['community_show_languageswitcher'] = True
@@ -63,7 +63,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(ROOT_PATH,'..','static')
+MEDIA_ROOT = os.path.join(ROOT_PATH, '..', 'static')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
@@ -169,5 +169,5 @@ try:
     # settings_local overwrites a few settings from here, and has to define SECRET_KEY
     from settings_local import *
 except:
-    print "Warning - Unable to import settings_local"
+    print("Warning - Unable to import settings_local")
 

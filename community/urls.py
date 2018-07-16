@@ -43,7 +43,7 @@ urlpatterns = patterns('',
                        (r'^site_media/(.*)$', 'django.views.static.serve', {'document_root': '/home/kahless/dev/python/diamanda/media'}), # change it or remove if not on dev server
 
                        (r'^accounts/login/$', 'django.contrib.auth.views.login'),
-                       (r'^accounts/logout/$','django.contrib.auth.views.logout'),
+                       (r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
                        (r'^accounts/register/(?P<emailHash>[a-zA-Z/\+0-9=]+)/$', 'sphene.community.views.register_hash'),
                        
 
