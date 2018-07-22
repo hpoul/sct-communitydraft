@@ -2,3 +2,4 @@ static/var
 community/settings_local.py
 *.pyc
 *.sqlite
+/media

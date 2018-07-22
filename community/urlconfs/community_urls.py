@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.urls import re_path, include, path
 
+from sphene.community.sphutils import mediafiles_urlpatterns
 from sphene.community.views import groupaware_redirect_to
 from sphene.sphwiki.sitemaps import WikiSnipSitemap
 from sphene.sphboard.sitemaps import ThreadsSitemap
@@ -52,4 +53,4 @@ urlpatterns = [
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-urlpatterns += staticfiles_urlpatterns()
+urlpatterns += staticfiles_urlpatterns() + mediafiles_urlpatterns()
