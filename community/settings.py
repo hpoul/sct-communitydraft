@@ -74,6 +74,8 @@ MEDIA_ROOT = os.path.join(ROOT_PATH, '..', 'media')
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
 MEDIA_URL = '/media/'
+STATIC_URL = '/mystatic/'
+
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -91,13 +93,15 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.load_template_source',
 )
 
+SPH_TEMPLATE_DIRS = [
+    os.path.join(ROOT_PATH, 'templates'),
+    os.path.join(ROOT_PATH, 'sitetemplates'),
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(ROOT_PATH, 'templates'),
-            os.path.join(ROOT_PATH, 'sitetemplates'),
-        ],
+        'DIRS': SPH_TEMPLATE_DIRS,
         'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
@@ -204,3 +208,5 @@ try:
 except:
     print("Warning - Unable to import settings_local")
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
