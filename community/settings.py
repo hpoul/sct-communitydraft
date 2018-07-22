@@ -193,6 +193,7 @@ INSTALLED_APPS = (
     'sphene.sphwiki',
     'sphene.sphblog',
 
+    'sphene.sphcomments',
 )
 
 DJAPIAN_DATABASE_PATH = '/var/cache/sct'
