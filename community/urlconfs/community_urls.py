@@ -1,13 +1,11 @@
-from django.conf import settings
+from django.contrib.sitemaps.views import sitemap
 from django.urls import re_path, include, path
 
 from sphene.community.sphutils import mediafiles_urlpatterns
 from sphene.community.views import groupaware_redirect_to
-from sphene.sphwiki.sitemaps import WikiSnipSitemap
 from sphene.sphboard.sitemaps import ThreadsSitemap
 from sphene.sphwiki.feeds import LatestWikiChanges
-
-from django.views import static as views_static
+from sphene.sphwiki.sitemaps import WikiSnipSitemap
 
 defaultdict = { 'groupName': None,
                 'urlPrefix': '', }
@@ -29,8 +27,8 @@ admin.autodiscover()
 urlpatterns = [
                        #(r'^$', 'django.views.generic.simple.redirect_to', { 'url': '/wiki/show/Start/' }),
     re_path(r'^$', groupaware_redirect_to, { 'url': '/wiki/show/Start/', 'groupName': None }),
-    #FIXME add sitemap
-    # re_path(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', { 'sitemaps': sitemaps }),
+    #FIXME sitemap warings
+    re_path(r'^sitemap.xml$', sitemap, { 'sitemaps': sitemaps }),
     re_path(r'^feeds/(?P<url>.*)/$', LatestWikiChanges(), {'feed_dict': feeds}),
     re_path(r'^community/', include('sphene.community.urls'), defaultdict),
     re_path(r'^board/', include('sphene.sphboard.urls'), defaultdict),
